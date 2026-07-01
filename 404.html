@@ -1,25 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page Not Found — Stackly</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page not found · Stackly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #F5F1E8;
+      color: #1E1B18;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    /* side mark – same as account page */
+    .side-mark {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      pointer-events: none;
+      mix-blend-mode: difference;
+    }
+    .side-mark span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: #F5F1E8;
+    }
+    @media (max-width: 860px) {
+      .side-mark { display: none; }
+    }
+
+    /* main error container */
+    .error-page {
+      max-width: 780px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.60);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 32px;
+      padding: 64px 48px 56px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: 0 30px 80px rgba(30,27,24,0.08);
+      position: relative;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+    .error-page:hover {
+      transform: translateY(-4px);
+    }
+
+    /* 404 number — oversized & elegant */
+    .code {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(6rem, 20vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: #6E2A3A;
+      background: linear-gradient(135deg, #6E2A3A 20%, #B9A28C 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      position: relative;
+      display: inline-block;
+    }
+    .code::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 10%;
+      width: 80%;
+      height: 4px;
+      background: rgba(185,162,140,0.3);
+      border-radius: 4px;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.02em;
+      color: #1E1B18;
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #4A413C;
+      max-width: 420px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 44px;
+      background: #1E1B18;
+      color: #F5F1E8;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #6E2A3A;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(110,42,58,0.25);
+    }
+
+    /* ----- dress animation (floating shapes & dresses) ----- */
+    .dress-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .dress-item {
+      position: absolute;
+      font-size: 2.8rem;
+      opacity: 0.2;
+      animation: floatDress 18s infinite alternate ease-in-out;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+    .dress-item:nth-child(1) { left: 5%; top: 10%; font-size: 4.2rem; animation-duration: 22s; opacity: 0.15; }
+    .dress-item:nth-child(2) { left: 88%; top: 25%; font-size: 3.6rem; animation-duration: 26s; animation-delay: -3s; opacity: 0.18; }
+    .dress-item:nth-child(3) { left: 15%; top: 70%; font-size: 5rem; animation-duration: 20s; animation-delay: -5s; opacity: 0.12; }
+    .dress-item:nth-child(4) { left: 78%; top: 75%; font-size: 3rem; animation-duration: 24s; animation-delay: -8s; opacity: 0.2; }
+    .dress-item:nth-child(5) { left: 50%; top: 8%; font-size: 3.2rem; animation-duration: 28s; animation-delay: -2s; opacity: 0.1; }
+    .dress-item:nth-child(6) { left: 92%; top: 55%; font-size: 4.8rem; animation-duration: 30s; animation-delay: -10s; opacity: 0.1; }
+    .dress-item:nth-child(7) { left: 2%; top: 48%; font-size: 3rem; animation-duration: 19s; animation-delay: -6s; opacity: 0.15; }
+    .dress-item:nth-child(8) { left: 60%; top: 85%; font-size: 3.8rem; animation-duration: 23s; animation-delay: -12s; opacity: 0.12; }
+
+    /* fabric swatches – abstract shapes */
+    .fabric-shape {
+      position: absolute;
+      border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%;
+      background: rgba(185,162,140,0.08);
+      filter: blur(24px);
+      animation: morphFabric 16s infinite alternate ease-in-out;
+      will-change: transform, border-radius;
+      pointer-events: none;
+    }
+    .fabric-shape:nth-child(9) {
+      width: 400px; height: 400px;
+      left: -120px; top: -80px;
+      background: rgba(110,42,58,0.06);
+      animation-duration: 20s;
+    }
+    .fabric-shape:nth-child(10) {
+      width: 500px; height: 500px;
+      right: -180px; bottom: -120px;
+      background: rgba(185,162,140,0.07);
+      animation-duration: 24s;
+      animation-delay: -4s;
+    }
+    .fabric-shape:nth-child(11) {
+      width: 300px; height: 300px;
+      left: 60%; top: 20%;
+      background: rgba(110,42,58,0.04);
+      animation-duration: 18s;
+      animation-delay: -8s;
+    }
+
+    @keyframes floatDress {
+      0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      20% { transform: translate(20px, -30px) rotate(6deg) scale(1.02); }
+      40% { transform: translate(-15px, 20px) rotate(-4deg) scale(0.98); }
+      60% { transform: translate(30px, 10px) rotate(8deg) scale(1.01); }
+      80% { transform: translate(-20px, -20px) rotate(-6deg) scale(0.97); }
+      100% { transform: translate(10px, 30px) rotate(2deg) scale(1.03); }
+    }
+
+    @keyframes morphFabric {
+      0% { border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%; transform: scale(1) rotate(0deg); }
+      33% { border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%; transform: scale(1.08) rotate(6deg); }
+      66% { border-radius: 70% 30% 60% 40% / 30% 70% 40% 60%; transform: scale(0.92) rotate(-4deg); }
+      100% { border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%; transform: scale(1.04) rotate(3deg); }
+    }
+
+    /* tiny responsive */
+    @media (max-width: 640px) {
+      .error-page { padding: 40px 24px; }
+      .dress-item { font-size: 2rem !important; }
+      .dress-item:nth-child(1) { font-size: 2.8rem !important; left: 2%; }
+      .dress-item:nth-child(3) { font-size: 3.2rem !important; left: 5%; }
+      .dress-item:nth-child(6) { font-size: 3rem !important; right: 2%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .dress-item, .fabric-shape { animation: none !important; }
+    }
+
+    /* subtle grain overlay (matching account) */
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.012;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+  </style>
 </head>
 <body>
-<div class="side-mark"><span>Stackly — Fashion Edit No.05</span></div>
 
-<main>
-  <div class="error-page">
+  <!-- side mark (same as account) -->
+  <div class="side-mark"><span>Stackly — Fashion Edit No.05</span></div>
+
+  <!-- dress scene – floating dresses & fabric shapes -->
+  <div class="dress-scene">
+    <!-- dress icons (unicode / emoji) -->
+    <div class="dress-item" aria-hidden="true">👗</div>
+    <div class="dress-item" aria-hidden="true">👘</div>
+    <div class="dress-item" aria-hidden="true">👗</div>
+    <div class="dress-item" aria-hidden="true">🧥</div>
+    <div class="dress-item" aria-hidden="true">👗</div>
+    <div class="dress-item" aria-hidden="true">👘</div>
+    <div class="dress-item" aria-hidden="true">👗</div>
+    <div class="dress-item" aria-hidden="true">🧥</div>
+
+    <!-- abstract fabric shapes -->
+    <div class="fabric-shape" aria-hidden="true"></div>
+    <div class="fabric-shape" aria-hidden="true"></div>
+    <div class="fabric-shape" aria-hidden="true"></div>
+  </div>
+
+  <!-- grain overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- main error content -->
+  <main class="error-page">
     <div class="code">404</div>
     <h2>This page stepped out of the collection.</h2>
     <p>The page you're looking for might have been moved or never existed. Let's get you back to something wearable.</p>
-    <a href="index.html" class="btn btn-primary magnetic">Back to Home</a>
-  </div>
-</main>
-<script src="js/main.js"></script>
+    <a href="index.html" class="btn magnetic">Back to Home</a>
+  </main>
+
+  <script>
+    // simple magnetic effect (same as account page)
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const strength = 0.25;
+        el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'translate(0, 0)';
+      });
+    });
+  </script>
 </body>
 </html>
