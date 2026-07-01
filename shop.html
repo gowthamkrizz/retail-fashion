@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All — Stackly</title>
+<meta name="description" content="Shop Stackly's curated collection of luxury fashion essentials — outerwear, knitwear, denim, and accessories built to last.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ===========================================================
+   SHOP PAGE ENHANCEMENTS
+=========================================================== */
+.filters {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  background: var(--ivory);
+  padding: 28px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.filter-group {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.filter-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.filter-group h5 {
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .88rem;
+  margin-bottom: 8px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: color .2s;
+}
+.filter-group label:hover { color: var(--ink); }
+.filter-group label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--wine);
+  cursor: pointer;
+}
+.filter-group label .count {
+  margin-left: auto;
+  font-family: var(--ff-mono);
+  font-size: .68rem;
+  color: var(--ink-soft);
+  opacity: .6;
+}
+
+.filter-size-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.filter-size-pill {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  font-family: var(--ff-mono);
+  font-size: .72rem;
+  cursor: pointer;
+  transition: all .3s ease;
+  color: var(--ink-soft);
+}
+.filter-size-pill:hover {
+  border-color: var(--wine);
+  color: var(--ink);
+}
+.filter-size-pill.active {
+  background: var(--ink);
+  color: var(--ivory);
+  border-color: var(--ink);
+}
+
+.filter-swatch-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.filter-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all .3s ease;
+  position: relative;
+}
+.filter-swatch:hover { transform: scale(1.1); }
+.filter-swatch.active {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--ivory), 0 0 0 4px var(--ink);
+}
+.filter-swatch .tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--ivory);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: var(--ff-mono);
+  font-size: .6rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.filter-swatch:hover .tooltip { opacity: 1; }
+
+.price-range-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.price-range-wrap input[type="range"] {
+  width: 100%;
+  accent-color: var(--wine);
+  height: 3px;
+  background: var(--line);
+  border-radius: 3px;
+  appearance: none;
+}
+.price-range-wrap input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--wine);
+  cursor: pointer;
+}
+.price-range-values {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  color: var(--ink-soft);
+}
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.active-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: var(--ivory-deep);
+  border-radius: 20px;
+  font-family: var(--ff-mono);
+  font-size: .68rem;
+  color: var(--ink-soft);
+}
+.active-filter-tag button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 0 2px;
+}
+.active-filter-tag button:hover { color: var(--wine); }
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: .78rem;
+  color: var(--ink-soft);
+}
+.product-rating .stars { color: var(--gold); letter-spacing: 1px; }
+
+.shop-toolbar .view-toggle {
+  display: flex;
+  gap: 4px;
+}
+.shop-toolbar .view-toggle button {
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink-soft);
+  transition: all .3s;
+  background: transparent;
+}
+.shop-toolbar .view-toggle button:hover,
+.shop-toolbar .view-toggle button.active {
+  background: var(--ink);
+  color: var(--ivory);
+  border-color: var(--ink);
+}
+.shop-toolbar .view-toggle button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.shop-layout .product-grid {
+  padding: 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 24px;
+}
+
+@media (max-width: 1200px) {
+  .shop-layout .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 980px) {
+  .shop-layout {
+    grid-template-columns: 1fr;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  .filters {
+    position: relative;
+    top: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  .filter-group {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .shop-layout .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .shop-layout .product-grid { grid-template-columns: 1fr; }
+  .filters { grid-template-columns: 1fr 1fr; }
+  .shop-toolbar { flex-direction: column; align-items: stretch; }
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .82rem;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+.breadcrumb a { color: var(--ink-soft); transition: color .2s; }
+.breadcrumb a:hover { color: var(--wine); }
+
+.page-header {
+  padding: 150px 0 50px;
+  padding-left: 54px;
+  background: linear-gradient(180deg, var(--ivory) 0%, var(--ivory-deep) 100%);
+  border-bottom: 1px solid var(--line);
+}
+.page-header p.sub {
+  color: var(--ink-soft);
+  max-width: 480px;
+  margin-top: 6px;
+  font-size: 1.05rem;
+}
+
+.product-quick .btn {
+  width: 100%;
+  padding: 12px;
+  font-size: .7rem;
+  border-radius: 40px;
+  background: var(--ivory);
+  color: var(--ink);
+}
+.product-quick .btn:hover {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+/* Product card link styling */
+.product-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.product-card-link:hover .product-thumb img {
+  transform: scale(1.04);
+}
+.product-card-link .product-thumb {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--ivory-deep);
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+}
+.product-card-link .product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+}
+.product-card-link .product-thumb .img-a {
+  position: relative;
+  z-index: 1;
+}
+.product-card-link .product-thumb .img-b {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+}
+.product-card-link:hover .img-a { opacity: 0; }
+.product-card-link:hover .img-b { opacity: 1; }
+</style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="preloader"><span><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></span></div>
+<div class="side-mark"><span>Stackly — Fashion Edit No.05</span></div>
+
+<header class="navbar">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="account.html">Account</a>
+    </nav>
+    <div class="nav-actions">
+     
+      <a href="cart.html" class="icon-btn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><span class="cart-count">0</span></a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== PAGE HEADER ===== -->
+  <div class="page-header" data-aos="fade-up">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> <span>/</span> <span>Shop</span>
+    </div>
+    <h1>Shop All</h1>
+    <p class="sub">Curated essentials for the modern wardrobe — tailored fits, honest fabrics, and pieces built to last.</p>
+  </div>
+
+  <!-- ===== SHOP LAYOUT ===== -->
+  <div class="shop-layout">
+
+    <!-- ===== FILTERS ===== -->
+    <aside class="filters" id="filters">
+      <div class="filter-group" data-filter-group="category">
+        <h5>Category</h5>
+        <label><input type="checkbox" value="outerwear" checked> Outerwear <span class="count">(24)</span></label>
+        <label><input type="checkbox" value="knitwear" checked> Knitwear <span class="count">(31)</span></label>
+        <label><input type="checkbox" value="denim" checked> Denim <span class="count">(18)</span></label>
+        <label><input type="checkbox" value="accessories" checked> Accessories <span class="count">(40)</span></label>
+      </div>
+
+      <div class="filter-group" data-filter-group="size">
+        <h5>Size</h5>
+        <div class="filter-size-row">
+          <span class="filter-size-pill" data-size="xs">XS</span>
+          <span class="filter-size-pill active" data-size="s">S</span>
+          <span class="filter-size-pill" data-size="m">M</span>
+          <span class="filter-size-pill" data-size="l">L</span>
+          <span class="filter-size-pill" data-size="xl">XL</span>
+        </div>
+      </div>
+
+      <div class="filter-group" data-filter-group="color">
+        <h5>Color</h5>
+        <div class="filter-swatch-row">
+          <span class="filter-swatch active" style="background:#221C1A;" data-color="black"><span class="tooltip">Black</span></span>
+          <span class="filter-swatch" style="background:#6E2A3A;" data-color="wine"><span class="tooltip">Wine</span></span>
+          <span class="filter-swatch" style="background:#C9A227;" data-color="gold"><span class="tooltip">Gold</span></span>
+          <span class="filter-swatch" style="background:#7C8C6B;" data-color="sage"><span class="tooltip">Sage</span></span>
+          <span class="filter-swatch" style="background:#ECE5D6;border:1px solid #ddd;" data-color="ivory"><span class="tooltip">Ivory</span></span>
+          <span class="filter-swatch" style="background:#4A4A4A;" data-color="charcoal"><span class="tooltip">Charcoal</span></span>
+        </div>
+      </div>
+
+      <div class="filter-group" data-filter-group="price">
+        <h5>Price Range</h5>
+        <div class="price-range-wrap">
+          <input type="range" min="0" max="300" value="250" id="priceRange">
+          <div class="price-range-values">
+            <span>$0</span>
+            <span id="priceDisplay">$250</span>
+            <span>$300</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group" data-filter-group="rating">
+        <h5>Rating</h5>
+        <label><input type="checkbox" value="4" checked> ★★★★ &amp; above</label>
+        <label><input type="checkbox" value="3" checked> ★★★ &amp; above</label>
+      </div>
+
+      <button class="btn btn-outline btn-block" id="clearFilters">Clear All Filters</button>
+    </aside>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div>
+      <div class="active-filters" id="activeFilters"></div>
+
+      <div class="shop-toolbar">
+        <span class="count">Showing <b id="showingCount">1–12</b> of <b id="totalCount">113</b> pieces</span>
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <select id="sortSelect" aria-label="Sort by" style="border:1px solid var(--line); padding:8px 14px; border-radius:4px; background:var(--ivory); font-size:.85rem;">
+            <option value="featured">Sort by: Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="newest">Newest</option>
+            <option value="rating">Top Rated</option>
+          </select>
+          <div class="view-toggle">
+            <button class="active" data-view="grid" aria-label="Grid view">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </button>
+            <button data-view="list" aria-label="List view">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+
+        <!-- Product 1 -->
+        <div class="product-card" data-category="outerwear" data-price="148" data-rating="4.8" data-colors="black,charcoal">
+          <a href="product.html?id=p1" class="product-card-link">
+            <div class="product-thumb">
+              <span class="product-badge">New</span>
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/Tailored Wool Coat.webp" alt="Tailored Wool Coat">
+              <img class="img-b" src="./images/Tailored Wool Coat1.webp" alt="">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p1" data-name="Tailored Wool Coat" data-price="148" data-img="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=700&auto=format&fit=crop">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Outerwear</span>
+            <h4><a href="product.html?id=p1">Tailored Wool Coat</a></h4>
+            <div class="product-price">$148.00</div>
+            <div class="product-rating"><span class="stars">★★★★★</span> 4.8 (236)</div>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card" data-category="knitwear" data-price="68" data-rating="4.6" data-colors="wine,ivory,charcoal">
+          <a href="product.html?id=p2" class="product-card-link">
+            <div class="product-thumb">
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/Ribbed Knit Sweater.webp" alt="Ribbed Knit Sweater">
+              <img class="img-b" src="./images/Ribbed Knit Sweater1.webp" alt="Ribbed Knit Sweater">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p2" data-name="Ribbed Knit Sweater" data-price="68" data-img="./images/drs 16.webp">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Knitwear</span>
+            <h4><a href="product.html?id=p2">Ribbed Knit Sweater</a></h4>
+            <div class="product-price">$68.00</div>
+            <div class="product-rating"><span class="stars">★★★★☆</span> 4.6 (189)</div>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card" data-category="denim" data-price="58" data-rating="4.4" data-colors="black,sage">
+          <a href="product.html?id=p3" class="product-card-link">
+            <div class="product-thumb">
+              <span class="product-badge">Sale</span>
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/Straight Leg Denim.webp" alt="Straight Leg Denim">
+              <img class="img-b" src="./images/st 2.webp" alt="">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p3" data-name="Straight Leg Denim" data-price="58" data-img="./images/drs 18.webp">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Denim</span>
+            <h4><a href="product.html?id=p3">Straight Leg Denim</a></h4>
+            <div class="product-price"><span class="old">$78.00</span>$58.00</div>
+            <div class="product-rating"><span class="stars">★★★★☆</span> 4.4 (312)</div>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card" data-category="accessories" data-price="96" data-rating="4.9" data-colors="black,wine,gold">
+          <a href="product.html?id=p4" class="product-card-link">
+            <div class="product-thumb">
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/Leather Crossbody Bag.webp" alt="Leather Crossbody Bag">
+              <img class="img-b" src="./images/Leather Crossbody Bag1.webp" alt="">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p4" data-name="Leather Crossbody Bag" data-price="96" data-img="./images/drs 20.webp">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Accessories</span>
+            <h4><a href="product.html?id=p4">Leather Crossbody Bag</a></h4>
+            <div class="product-price">$96.00</div>
+            <div class="product-rating"><span class="stars">★★★★★</span> 4.9 (427)</div>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card" data-category="accessories" data-price="42" data-rating="4.5" data-colors="ivory,charcoal,gold">
+          <a href="product.html?id=p5" class="product-card-link">
+            <div class="product-thumb">
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/drs 22.webp" alt="Cashmere Blend Scarf">
+              <img class="img-b" src="./images/drs 23.webp" alt="">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p5" data-name="Cashmere Blend Scarf" data-price="42" data-img="./images/drs 22.webp">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Accessories</span>
+            <h4><a href="product.html?id=p5">Cashmere Blend Scarf</a></h4>
+            <div class="product-price">$42.00</div>
+            <div class="product-rating"><span class="stars">★★★★☆</span> 4.5 (156)</div>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card" data-category="knitwear" data-price="54" data-rating="4.3" data-colors="ivory,sage">
+          <a href="product.html?id=p6" class="product-card-link">
+            <div class="product-thumb">
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/drs 24.webp" alt="Oversized Linen Shirt">
+              <img class="img-b" src="./images/drs 25.webp" alt="">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p6" data-name="Oversized Linen Shirt" data-price="54" data-img="./images/drs 24.webp">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Knitwear</span>
+            <h4><a href="product.html?id=p6">Oversized Linen Shirt</a></h4>
+            <div class="product-price">$54.00</div>
+            <div class="product-rating"><span class="stars">★★★★☆</span> 4.3 (98)</div>
+          </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card" data-category="denim" data-price="88" data-rating="4.7" data-colors="black,sage">
+          <a href="product.html?id=p7" class="product-card-link">
+            <div class="product-thumb">
+              <span class="product-badge">New</span>
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/Cropped Denim Jacket1.webp" alt="Cropped Denim Jacket">
+              <img class="img-b" src="./images/Cropped Denim Jacket.webp" alt="">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p7" data-name="Cropped Denim Jacket" data-price="88" data-img="./images/drs 26.webp">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Denim</span>
+            <h4><a href="product.html?id=p7">Cropped Denim Jacket</a></h4>
+            <div class="product-price">$88.00</div>
+            <div class="product-rating"><span class="stars">★★★★★</span> 4.7 (203)</div>
+          </div>
+        </div>
+
+        <!-- Product 8 -->
+        <div class="product-card" data-category="accessories" data-price="34" data-rating="4.2" data-colors="black,wine">
+          <a href="product.html?id=p8" class="product-card-link">
+            <div class="product-thumb">
+              <button class="wishlist-btn" aria-label="Wishlist" onclick="event.preventDefault(); event.stopPropagation();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+              <img class="img-a" src="./images/Leather Belt.webp" alt="Leather Belt">
+              <img class="img-b" src="./images/Leather Belt1.webp" alt="Leather Belt">
+              <div class="product-quick" onclick="event.preventDefault(); event.stopPropagation();">
+                <button class="btn btn-primary" data-add-cart data-id="p8" data-name="Leather Belt" data-price="34" data-img="./images/drs 28.webp">Add to Bag</button>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <span class="cat">Accessories</span>
+            <h4><a href="product.html?id=p8">Leather Belt</a></h4>
+            <div class="product-price">$34.00</div>
+            <div class="product-rating"><span class="stars">★★★★☆</span> 4.2 (87)</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pagination">
+        <a href="404.html" class="active">1</a>
+        <a href="404.html">2</a>
+        <a href="404.html">3</a>
+        <a href="404.html">4</a>
+        <a href="404.html">→</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== USP STRIP ===== -->
+  <section class="usp-strip" data-aos="fade-up">
+    <div class="wrap usp-grid">
+      <div class="usp-item">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg></div>
+        <div><h4>Free Shipping</h4><p>On all orders over $150, anywhere we ship.</p></div>
+      </div>
+      <div class="usp-item">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div>
+        <div><h4>30-Day Returns</h4><p>Free return pickup, no questions asked.</p></div>
+      </div>
+      <div class="usp-item">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div><h4>Secure Checkout</h4><p>Encrypted payments, every order, every time.</p></div>
+      </div>
+      <div class="usp-item">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div><h4>Responsibly Made</h4><p>Deadstock fabrics, fair-wage stitching units.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY SHOP STACKLY ===== -->
+  <section class="section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" style="color:var(--gold);">Why Shop Stackly</p>
+          <h2>Built around fewer, better choices</h2>
+        </div>
+        <p>We'd rather give you three good options than thirty mediocre ones.</p>
+      </div>
+      <div class="promise-grid">
+        <div class="promise-card" data-aos="fade-up">
+          <span class="num">01</span>
+          <h3>Honest Sizing</h3>
+          <p>Every piece is fit-tested on real bodies before it goes live, with detailed notes on every product page.</p>
+        </div>
+        <div class="promise-card" data-aos="fade-up" data-aos-delay="80">
+          <span class="num">02</span>
+          <h3>Fabric-First</h3>
+          <p>We choose the material before the sketch — deadstock wool, organic cotton, responsibly tanned leather.</p>
+        </div>
+        <div class="promise-card" data-aos="fade-up" data-aos-delay="160">
+          <span class="num">03</span>
+          <h3>Small Batches</h3>
+          <p>Limited runs mean less waste, and a lower chance you'll see your coat on someone else at brunch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STYLE JOURNAL ===== -->
+  <section class="section" style="padding-top:0;" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" style="color:var(--gold);">Style Journal</p>
+          <h2>From the edit</h2>
+        </div>
+        <a href="404.html" class="btn btn-outline magnetic">View All</a>
+      </div>
+      <div class="blog-grid">
+        <a href="404.html" class="blog-card" data-aos="fade-up">
+          <img src="./images/Tailored Wool Coat1.webp" alt="Layering guide">
+          <div class="blog-content">
+            <span class="meta">Style Guide</span>
+            <h3>Five ways to layer the wool coat</h3>
+            <p>From office-ready to weekend-easy, one coat, five looks that actually work.</p>
+          </div>
+        </a>
+        <a href="404.html" class="blog-card" data-aos="fade-up" data-aos-delay="80">
+          <img src="./images/Keeping wool knits looking new.webp" alt="Fabric care">
+          <div class="blog-content">
+            <span class="meta">Care Guide</span>
+            <h3>Keeping wool knits looking new</h3>
+            <p>Wash less, fold more — the small habits that extend a sweater's life.</p>
+          </div>
+        </a>
+        <a href="404.html" class="blog-card" data-aos="fade-up" data-aos-delay="160">
+          <img src="./images/p1.webp" alt="Denim guide">
+          <div class="blog-content">
+            <span class="meta">Fit Guide</span>
+            <h3>Finding your denim silhouette</h3>
+            <p>Straight, cropped, or relaxed — a quick guide to reading the cut.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="section" style="padding-top:0;" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" style="color:var(--gold);">FAQ</p>
+          <h2>Shopping with Stackly</h2>
+        </div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open" data-aos="fade-up">
+          <button class="faq-q">What's your return policy? <span class="plus">+</span></button>
+          <div class="faq-a">You have 30 days from delivery to return any unworn piece for a full refund, including free pickup from your location.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <button class="faq-q">Do you ship internationally? <span class="plus">+</span></button>
+          <div class="faq-a">Yes — we ship across India in 2-3 days and internationally in 7-12 business days, depending on your location.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <button class="faq-q">How does sizing run? <span class="plus">+</span></button>
+          <div class="faq-a">Most pieces run true to size. Check the Size Guide tab on each product page for detailed fit notes and model measurements.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <button class="faq-q">Can I exchange for a different size? <span class="plus">+</span></button>
+          <div class="faq-a">Yes, free size exchanges are available within 30 days, subject to stock availability.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRESS STRIP ===== -->
+  <section class="press-strip" data-aos="fade-up">
+    <div class="wrap">
+      <p class="label">As Featured In</p>
+      <div class="press-row">
+        <span>VOGUE INDIA</span>
+        <span>GQ</span>
+        <span>The Hindu</span>
+        <span>Elle</span>
+        <span>Mint Lounge</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BANNER ===== -->
+  <section class="cta-banner" data-aos="fade-up">
+    <h2>Not sure where to start?</h2>
+    <p>Take our 60-second style quiz and we'll put together a starter edit just for you.</p>
+    <a href="404.html" class="btn btn-gold magnetic">Take the Style Quiz</a>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></a>
+        <p>A fashion house for considered wardrobes, designed and shipped from Salem, Tamil Nadu.</p>
+        <div class="footer-social">
+          <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="404.html" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          <a href="404.html" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Shop</h5>
+        <a href="404.html">Outerwear</a>
+        <a href="404.html">Knitwear</a>
+        <a href="404.html">Denim</a>
+        <a href="404.html">Accessories</a>
+      </div>
+      <div class="footer-col"><h5>Company</h5>
+        <a href="index.html">Home</a>
+        <a href="about.html">About </a>
+        <a href="contact.html">Contact</a>
+        <a href="account.html"> Account</a>
+        <a href="cart.html">Bag</a>
+      </div>
+      <div class="footer-col"><h5>Visit</h5>
+        <a href="404.html">MMR Complex, Salem, Tamil Nadu</a>
+        <a href="404.html">+91 63800 00000</a>
+        <a href="404.html">hello@stackly.in</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> Stackly. All rights reserved.</span>
+      <span>Designed in Salem, Tamil Nadu</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ---- AOS ----
+  if (window.AOS) {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 60
+    });
+  }
+
+  // ---- PRELOADER ----
+  var preloader = document.querySelector('.preloader');
+  if (preloader) {
+    setTimeout(function() { preloader.classList.add('hide'); }, 800);
+  }
+
+  // ---- YEAR ----
+  document.querySelectorAll('.year').forEach(function(el) {
+    el.textContent = new Date().getFullYear();
+  });
+
+  // ---- NAVBAR ----
+  var navbar = document.querySelector('.navbar');
+  if (navbar) {
+    window.addEventListener('scroll', function() {
+      navbar.classList.toggle('scrolled', window.scrollY > 30);
+    });
+  }
+
+  // ---- HAMBURGER ----
+  var burger = document.querySelector('.hamburger');
+  var navLinks = document.querySelector('.nav-links');
+  if (burger && navLinks) {
+    burger.addEventListener('click', function() {
+      burger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        burger.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+  }
+
+  // ---- MAGNETIC BUTTONS ----
+  document.querySelectorAll('.magnetic').forEach(function(el) {
+    el.addEventListener('mousemove', function(e) {
+      var rect = this.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      this.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.4) + 'px)';
+    });
+    el.addEventListener('mouseleave', function() {
+      this.style.transform = 'translate(0, 0)';
+    });
+  });
+
+  // ---- TOAST ----
+  var toastEl = document.getElementById('toast');
+  window.showToast = function(message) {
+    if (!toastEl) return;
+    toastEl.innerHTML = message;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._timer);
+    toastEl._timer = setTimeout(function() {
+      toastEl.classList.remove('show');
+    }, 2600);
+  };
+
+  // ---- CART ----
+  var CART_KEY = 'stackly_cart';
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
+  }
+  function setCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCount();
+  }
+  function updateCartCount() {
+    var cart = getCart();
+    var total = cart.reduce(function(sum, item) { return sum + (item.qty || 1); }, 0);
+    document.querySelectorAll('.cart-count').forEach(function(el) {
+      el.textContent = total;
+    });
+  }
+  updateCartCount();
+
+  window.stacklyCart = {
+    add: function(item) {
+      var cart = getCart();
+      var existing = cart.find(function(i) { return i.id === item.id && i.size === (item.size || 'M'); });
+      if (existing) {
+        existing.qty = (existing.qty || 1) + (item.qty || 1);
+      } else {
+        cart.push({ id: item.id, name: item.name, price: item.price, img: item.img, size: item.size || 'M', qty: item.qty || 1 });
+      }
+      setCart(cart);
+      window.showToast('<b>Added</b> — ' + item.name + ' is in your bag');
+    }
+  };
+
+  document.querySelectorAll('[data-add-cart]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      window.stacklyCart.add({
+        id: this.dataset.id,
+        name: this.dataset.name,
+        price: parseFloat(this.dataset.price),
+        img: this.dataset.img,
+        size: this.dataset.size || 'M'
+      });
+    });
+  });
+
+  // ---- WISHLIST ----
+  document.querySelectorAll('.wishlist-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.classList.toggle('active');
+    });
+  });
+
+  // ---- FILTER SYSTEM ----
+  var products = document.querySelectorAll('.product-card');
+  var activeFilters = {
+    categories: ['outerwear', 'knitwear', 'denim', 'accessories'],
+    sizes: ['s'],
+    colors: ['black'],
+    priceMax: 250,
+    ratings: [4, 3]
+  };
+
+  // Category checkboxes
+  document.querySelectorAll('[data-filter-group="category"] input[type="checkbox"]').forEach(function(cb) {
+    cb.addEventListener('change', function() {
+      var checked = [];
+      document.querySelectorAll('[data-filter-group="category"] input[type="checkbox"]:checked').forEach(function(c) {
+        checked.push(c.value);
+      });
+      activeFilters.categories = checked.length ? checked : ['outerwear', 'knitwear', 'denim', 'accessories'];
+      applyFilters();
+    });
+  });
+
+  // Size pills
+  document.querySelectorAll('.filter-size-pill').forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      this.classList.toggle('active');
+      var sizes = [];
+      document.querySelectorAll('.filter-size-pill.active').forEach(function(p) {
+        sizes.push(p.dataset.size);
+      });
+      activeFilters.sizes = sizes.length ? sizes : ['xs', 's', 'm', 'l', 'xl'];
+      applyFilters();
+    });
+  });
+
+  // Color swatches
+  document.querySelectorAll('.filter-swatch').forEach(function(swatch) {
+    swatch.addEventListener('click', function() {
+      document.querySelectorAll('.filter-swatch').forEach(function(s) { s.classList.remove('active'); });
+      this.classList.add('active');
+      var colors = [];
+      document.querySelectorAll('.filter-swatch.active').forEach(function(s) {
+        colors.push(s.dataset.color);
+      });
+      activeFilters.colors = colors.length ? colors : ['black', 'wine', 'gold', 'sage', 'ivory', 'charcoal'];
+      applyFilters();
+    });
+  });
+
+  // Price range
+  var priceRange = document.getElementById('priceRange');
+  if (priceRange) {
+    priceRange.addEventListener('input', function() {
+      document.getElementById('priceDisplay').textContent = '$' + this.value;
+      activeFilters.priceMax = parseInt(this.value);
+      applyFilters();
+    });
+  }
+
+  // Rating checkboxes
+  document.querySelectorAll('[data-filter-group="rating"] input[type="checkbox"]').forEach(function(cb) {
+    cb.addEventListener('change', function() {
+      var ratings = [];
+      document.querySelectorAll('[data-filter-group="rating"] input[type="checkbox"]:checked').forEach(function(c) {
+        ratings.push(parseInt(c.value));
+      });
+      activeFilters.ratings = ratings.length ? ratings : [4, 3];
+      applyFilters();
+    });
+  });
+
+  // Clear filters
+  document.getElementById('clearFilters').addEventListener('click', function() {
+    document.querySelectorAll('[data-filter-group] input[type="checkbox"]').forEach(function(cb) {
+      cb.checked = true;
+    });
+    document.querySelectorAll('.filter-size-pill').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    document.querySelector('.filter-size-pill[data-size="s"]')?.classList.add('active');
+    document.querySelectorAll('.filter-swatch').forEach(function(s) {
+      s.classList.remove('active');
+    });
+    document.querySelector('.filter-swatch[data-color="black"]')?.classList.add('active');
+    if (priceRange) {
+      priceRange.value = 250;
+      document.getElementById('priceDisplay').textContent = '$250';
+    }
+    activeFilters = {
+      categories: ['outerwear', 'knitwear', 'denim', 'accessories'],
+      sizes: ['s'],
+      colors: ['black'],
+      priceMax: 250,
+      ratings: [4, 3]
+    };
+    applyFilters();
+  });
+
+  // Sort
+  document.getElementById('sortSelect')?.addEventListener('change', function() {
+    applyFilters();
+  });
+
+  // View toggle
+  document.querySelectorAll('[data-view]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-view]').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      var grid = document.getElementById('productGrid');
+      if (this.dataset.view === 'list') {
+        grid.style.gridTemplateColumns = '1fr';
+        grid.querySelectorAll('.product-card').forEach(function(card) {
+          card.style.display = 'grid';
+          card.style.gridTemplateColumns = '1fr 1fr';
+          card.style.gap = '20px';
+          card.style.alignItems = 'center';
+        });
+      } else {
+        grid.style.gridTemplateColumns = '';
+        grid.querySelectorAll('.product-card').forEach(function(card) {
+          card.style.display = '';
+          card.style.gridTemplateColumns = '';
+          card.style.gap = '';
+          card.style.alignItems = '';
+        });
+      }
+    });
+  });
+
+  function applyFilters() {
+    var visible = 0;
+    products.forEach(function(product) {
+      var category = product.dataset.category;
+      var price = parseFloat(product.dataset.price);
+      var rating = parseFloat(product.dataset.rating);
+      var colors = product.dataset.colors ? product.dataset.colors.split(',') : [];
+      var show = true;
+
+      if (activeFilters.categories.length && !activeFilters.categories.includes(category)) {
+        show = false;
+      }
+
+      if (price > activeFilters.priceMax) {
+        show = false;
+      }
+
+      if (activeFilters.ratings.length) {
+        var ratingMatch = false;
+        activeFilters.ratings.forEach(function(r) {
+          if (rating >= r) ratingMatch = true;
+        });
+        if (!ratingMatch) show = false;
+      }
+
+      if (activeFilters.colors.length) {
+        var colorMatch = false;
+        colors.forEach(function(c) {
+          if (activeFilters.colors.includes(c.trim())) colorMatch = true;
+        });
+        if (!colors.length && activeFilters.colors.includes('black')) colorMatch = true;
+        if (!colorMatch) show = false;
+      }
+
+      product.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    var totalEl = document.getElementById('totalCount');
+    var showingEl = document.getElementById('showingCount');
+    if (totalEl) totalEl.textContent = visible;
+    if (showingEl) {
+      var start = Math.min(1, visible);
+      var end = Math.min(12, visible);
+      showingEl.textContent = visible > 0 ? start + '–' + end : '0';
+    }
+
+    var activeFilterTags = document.getElementById('activeFilters');
+    if (activeFilterTags) {
+      var tags = [];
+      activeFilters.categories.forEach(function(c) {
+        tags.push('<span class="active-filter-tag">' + c.charAt(0).toUpperCase() + c.slice(1) + ' <button data-filter="category-' + c + '">×</button></span>');
+      });
+      activeFilters.sizes.forEach(function(s) {
+        tags.push('<span class="active-filter-tag">Size ' + s.toUpperCase() + ' <button data-filter="size-' + s + '">×</button></span>');
+      });
+      activeFilters.colors.forEach(function(c) {
+        var colorNames = { black: 'Black', wine: 'Wine', gold: 'Gold', sage: 'Sage', ivory: 'Ivory', charcoal: 'Charcoal' };
+        var displayName = colorNames[c] || c;
+        tags.push('<span class="active-filter-tag">' + displayName + ' <button data-filter="color-' + c + '">×</button></span>');
+      });
+      if (activeFilters.priceMax < 300) {
+        tags.push('<span class="active-filter-tag">Under $' + activeFilters.priceMax + ' <button data-filter="price">×</button></span>');
+      }
+      activeFilterTags.innerHTML = tags.length ? tags.join('') : '';
+
+      activeFilterTags.querySelectorAll('[data-filter]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var filter = this.dataset.filter;
+          if (filter.startsWith('category-')) {
+            var cat = filter.replace('category-', '');
+            document.querySelectorAll('[data-filter-group="category"] input[type="checkbox"]').forEach(function(cb) {
+              if (cb.value === cat) cb.checked = false;
+            });
+            activeFilters.categories = [];
+            document.querySelectorAll('[data-filter-group="category"] input[type="checkbox"]:checked').forEach(function(c) {
+              activeFilters.categories.push(c.value);
+            });
+            if (!activeFilters.categories.length) {
+              activeFilters.categories = ['outerwear', 'knitwear', 'denim', 'accessories'];
+              document.querySelectorAll('[data-filter-group="category"] input[type="checkbox"]').forEach(function(cb) {
+                cb.checked = true;
+              });
+            }
+            applyFilters();
+          } else if (filter.startsWith('size-')) {
+            var size = filter.replace('size-', '');
+            document.querySelectorAll('.filter-size-pill').forEach(function(p) {
+              if (p.dataset.size === size) p.classList.remove('active');
+            });
+            activeFilters.sizes = [];
+            document.querySelectorAll('.filter-size-pill.active').forEach(function(p) {
+              activeFilters.sizes.push(p.dataset.size);
+            });
+            if (!activeFilters.sizes.length) {
+              activeFilters.sizes = ['xs', 's', 'm', 'l', 'xl'];
+            }
+            applyFilters();
+          } else if (filter.startsWith('color-')) {
+            var color = filter.replace('color-', '');
+            document.querySelectorAll('.filter-swatch').forEach(function(s) {
+              if (s.dataset.color === color) s.classList.remove('active');
+            });
+            activeFilters.colors = [];
+            document.querySelectorAll('.filter-swatch.active').forEach(function(s) {
+              activeFilters.colors.push(s.dataset.color);
+            });
+            if (!activeFilters.colors.length) {
+              activeFilters.colors = ['black'];
+              document.querySelector('.filter-swatch[data-color="black"]')?.classList.add('active');
+            }
+            applyFilters();
+          } else if (filter === 'price') {
+            if (priceRange) {
+              priceRange.value = 300;
+              document.getElementById('priceDisplay').textContent = '$300';
+              activeFilters.priceMax = 300;
+              applyFilters();
+            }
+          }
+        });
+      });
+    }
+  }
+
+  applyFilters();
+
+  // ---- FAQ ACCORDION ----
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var wasOpen = item.classList.contains('open');
+      var parent = item.parentElement;
+      if (parent) {
+        parent.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      }
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

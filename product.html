@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tailored Wool Coat — Stackly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* Additional product page styles */
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  padding: 140px 32px 100px 54px;
+}
+.pd-gallery .main-img {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  background: var(--ivory-deep);
+}
+.pd-gallery .main-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pd-thumbs {
+  display: flex;
+  gap: 12px;
+}
+.pd-thumbs img {
+  width: 80px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  cursor: pointer;
+  opacity: .6;
+  transition: .25s;
+  border: 1.5px solid transparent;
+}
+.pd-thumbs img.active {
+  opacity: 1;
+  border-color: var(--wine);
+}
+.pd-info .cat {
+  font-family: var(--ff-mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--wine);
+}
+.pd-info h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin: 10px 0 14px;
+}
+.pd-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.pd-rating .stars {
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.pd-rating span {
+  font-size: .85rem;
+  color: var(--ink-soft);
+}
+.pd-price {
+  font-family: var(--ff-mono);
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+.pd-price .old {
+  text-decoration: line-through;
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  margin-right: 10px;
+}
+.pd-desc {
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+  max-width: 480px;
+}
+.option-group {
+  margin-bottom: 26px;
+}
+.option-group h5 {
+  font-family: var(--ff-mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+}
+.size-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.size-pill {
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .84rem;
+  cursor: pointer;
+  transition: .25s;
+}
+.size-pill:hover,
+.size-pill.active {
+  background: var(--ink);
+  color: var(--ivory);
+  border-color: var(--ink);
+}
+.qty-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+.qty-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.qty-control button {
+  width: 40px;
+  height: 44px;
+  font-size: 1.1rem;
+}
+.qty-control input {
+  width: 46px;
+  text-align: center;
+  border: none;
+  background: none;
+}
+.pd-cta {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+.pd-meta {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  font-size: .86rem;
+  color: var(--ink-soft);
+}
+.pd-meta div {
+  margin-bottom: 8px;
+}
+.pd-meta b {
+  color: var(--ink);
+  font-weight: 600;
+}
+@media (max-width: 980px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+    padding-left: 32px;
+    padding-top: 120px;
+  }
+}
+.tabs {
+  padding: 0 32px 100px 54px;
+}
+.tab-nav {
+  display: flex;
+  gap: 36px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 34px;
+}
+.tab-nav button {
+  padding: 14px 0;
+  font-family: var(--ff-mono);
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+  border-bottom: 2px solid transparent;
+}
+.tab-nav button.active {
+  color: var(--ink);
+  border-color: var(--wine);
+}
+.tab-pane {
+  display: none;
+  max-width: 760px;
+  color: var(--ink-soft);
+}
+.tab-pane.active {
+  display: block;
+}
+.review-item {
+  border-bottom: 1px solid var(--line);
+  padding: 20px 0;
+}
+.review-item .stars {
+  color: var(--gold);
+}
+.review-item .name {
+  font-weight: 600;
+  color: var(--ink);
+  margin-right: 10px;
+}
+@media (max-width: 860px) {
+  .tabs {
+    padding-left: 32px;
+  }
+}
+</style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="preloader"><span><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></span></div>
+<div class="side-mark"><span>Stackly — Fashion Edit No.05</span></div>
+
+<header class="navbar">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="account.html">Account</a>
+    </nav>
+    <div class="nav-actions">
+     
+      <a href="cart.html" class="icon-btn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><span class="cart-count">0</span></a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="product-detail" id="productDetail">
+    <div class="pd-gallery" data-aos="fade-right">
+      <div class="main-img"><img id="mainImage" src="" alt="Product image"></div>
+      <div class="pd-thumbs" id="thumbnails">
+        <img class="active" src="" alt="Front view thumbnail">
+        <img src="" alt="Side view thumbnail">
+        <img src="" alt="Detail view thumbnail">
+        <img src="" alt="Worn view thumbnail">
+      </div>
+    </div>
+
+    <div class="pd-info" data-aos="fade-left">
+      <span class="cat" id="productCategory">Outerwear / Coats</span>
+      <h1 id="productName">Tailored Wool Coat</h1>
+      <div class="pd-rating"><span class="stars" id="productStars">★★★★★</span><span id="productRating">4.8 (236 reviews)</span></div>
+      <div class="pd-price" id="productPrice">$148.00</div>
+      <p class="pd-desc" id="productDesc">A double-faced wool-blend overcoat with a clean, tailored silhouette. Structured shoulders, a single-button close, and a fully lined interior make this the piece you reach for from the first cold morning through the last.</p>
+
+      <div class="option-group">
+        <h5 id="colorLabel">Color — Charcoal</h5>
+        <div class="swatch-row" id="colorSwatches">
+          <div class="swatch active" style="background:#221C1A"></div>
+          <div class="swatch" style="background:#6E2A3A"></div>
+          <div class="swatch" style="background:#ECE5D6;border:1px solid #ddd;"></div>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <h5>Size — Select Size</h5>
+        <div class="size-row">
+          <div class="size-pill">XS</div><div class="size-pill active">S</div><div class="size-pill">M</div><div class="size-pill">L</div><div class="size-pill">XL</div>
+        </div>
+      </div>
+
+      <div class="qty-row">
+        <div class="qty-control"><button class="qty-minus">−</button><input type="text" readonly value="1"><button class="qty-plus">+</button></div>
+        <span style="font-size:.85rem; color:var(--sage);" id="stockStatus">In stock — ships in 2–3 days</span>
+      </div>
+
+      <div class="pd-cta">
+        <button class="btn btn-primary magnetic" id="addToBagBtn" data-add-cart data-id="p1" data-name="Tailored Wool Coat" data-price="148" data-img="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=700&auto=format&fit=crop" data-size="S">Add to Bag — $148.00</button>
+        <button class="icon-btn wishlist-btn" aria-label="Wishlist" style="width:54px; height:54px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.7-10-9.3C0.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.4C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.7C19.5 16.3 12 21 12 21z"/></svg></button>
+      </div>
+
+      <div class="pd-meta" id="productMeta">
+        <div><b>SKU:</b> <span id="productSku">STK-OW-0142</span></div>
+        <div><b>Material:</b> <span id="productMaterial">70% Wool, 30% Recycled Polyester</span></div>
+        <div><b>Care:</b> <span id="productCare">Dry clean only</span></div>
+        <div><b>Shipping:</b> Free over $150 · Returns within 30 days</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab-nav">
+      <button class="active" data-tab="tab-desc">Description</button>
+      <button data-tab="tab-size">Size Guide</button>
+      <button data-tab="tab-reviews" id="reviewsTab">Reviews (236)</button>
+    </div>
+    <div id="tab-desc" class="tab-pane active" id="productDescription">
+      <p id="descText">Cut from a heavyweight double-faced wool blend, this overcoat is built around a structured shoulder and a single horn button at the chest. The fully lined interior includes an interior pocket sized for a phone, and the collar is cut high enough to stand up against wind without a scarf. Designed in Salem, sourced from mills in Ludhiana.</p>
+    </div>
+    <div id="tab-size" class="tab-pane">
+      <p>True to size. If you're between sizes, we recommend sizing up for a relaxed, layerable fit. Model is 5'10" wearing a size S.</p>
+      <p style="margin-top:12px;">XS: Chest 36" · S: Chest 38" · M: Chest 40" · L: Chest 42" · XL: Chest 44"</p>
+    </div>
+    <div id="tab-reviews" class="tab-pane" id="reviewsContainer">
+      <div class="review-item"><span class="stars">★★★★★</span> <span class="name">Meera K.</span><p>Fits exactly as described, and the wool feels genuinely premium. Worth every rupee.</p></div>
+      <div class="review-item"><span class="stars">★★★★☆</span> <span class="name">Arjun V.</span><p>Great coat, slightly heavier than I expected but that's not a complaint in winter.</p></div>
+      <div class="review-item"><span class="stars">★★★★★</span> <span class="name">Priya S.</span><p>Bought in charcoal, already eyeing the wine colorway for a second one.</p></div>
+    </div>
+  </div>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head" data-aos="fade-up">
+        <div><p class="eyebrow">You May Also Like</p><h2>Complete the look</h2></div>
+      </div>
+      <div class="product-grid">
+        <div class="product-card" data-aos="fade-up">
+          <div class="product-thumb">
+            <img class="img-a" src="./images/Knit Sweater.webp" alt="Ribbed Knit Sweater">
+            <div class="product-quick"><button class="btn btn-primary" data-add-cart data-id="p2" data-name="Ribbed Knit Sweater" data-price="68" data-img="./images/drs 26.webp">Add to Bag</button></div>
+          </div>
+          <div class="product-info"><span class="cat">Knitwear</span><h4><a href="product.html?id=p2">Ribbed Knit Sweater</a></h4><div class="product-price">$68.00</div></div>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="product-thumb">
+            <img class="img-a" src="./images/Straight Leg Denim.webp" alt="Straight Leg Denim">
+            <div class="product-quick"><button class="btn btn-primary" data-add-cart data-id="p3" data-name="Straight Leg Denim" data-price="58" data-img="./images/drs 27.webp">Add to Bag</button></div>
+          </div>
+          <div class="product-info"><span class="cat">Denim</span><h4><a href="product.html?id=p3">Straight Leg Denim</a></h4><div class="product-price">$58.00</div></div>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="product-thumb">
+            <img class="img-a" src="./images/Leather Crossbody Bag.webp" alt="Leather Crossbody Bag">
+            <div class="product-quick"><button class="btn btn-primary" data-add-cart data-id="p4" data-name="Leather Crossbody Bag" data-price="96" data-img="./images/drs 28.webp">Add to Bag</button></div>
+          </div>
+          <div class="product-info"><span class="cat">Accessories</span><h4><a href="product.html?id=p4">Leather Crossbody Bag</a></h4><div class="product-price">$96.00</div></div>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="product-thumb">
+            <img class="img-a" src="./images/Cashmere Scarf.webp" alt="Cashmere Blend Scarf">
+            <div class="product-quick"><button class="btn btn-primary" data-add-cart data-id="p5" data-name="Cashmere Blend Scarf" data-price="42" data-img="./images/drs 29.webp">Add to Bag</button></div>
+          </div>
+          <div class="product-info"><span class="cat">Accessories</span><h4><a href="product.html?id=p5">Cashmere Blend Scarf</a></h4><div class="product-price">$42.00</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="usp-strip" data-aos="fade-up">
+    <div class="wrap usp-grid">
+      <div class="usp-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg></div><div><h4>Free Shipping</h4><p>On all orders over $150.</p></div></div>
+      <div class="usp-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div><div><h4>30-Day Returns</h4><p>Free return pickup, no questions asked.</p></div></div>
+      <div class="usp-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><h4>Secure Checkout</h4><p>Encrypted payments, every order.</p></div></div>
+      <div class="usp-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><h4>Responsibly Made</h4><p>Deadstock fabrics, fair-wage stitching.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head" data-aos="fade-up"><div><p class="eyebrow">Service</p><h2>Shipping &amp; care, made simple</h2></div></div>
+      <div class="help-strip">
+        <div class="help-card" data-aos="fade-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg></div><h4>Dispatch</h4><p>Ships within 48 hours from our Salem studio.</p></div>
+        <div class="help-card" data-aos="fade-up" data-aos-delay="80"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div><h4>Easy Returns</h4><p>30 days to return, free pickup included.</p></div>
+        <div class="help-card" data-aos="fade-up" data-aos-delay="160"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div><h4>Quality Promise</h4><p>Fit-tested, fabric-checked, before it ships.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head" data-aos="fade-up"><div><p class="eyebrow">FAQ</p><h2>Questions on this piece</h2></div></div>
+      <div class="faq-list">
+        <div class="faq-item open" data-aos="fade-up">
+          <button class="faq-q">Does this coat run true to size? <span class="plus">+</span></button>
+          <div class="faq-a">Yes, true to size. If you prefer a relaxed, layerable fit, we recommend sizing up.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <button class="faq-q">Is the wool itchy against skin? <span class="plus">+</span></button>
+          <div class="faq-a">It's fully lined, so the wool shell never touches skin directly — soft against shirts and knitwear.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <button class="faq-q">How do I clean it? <span class="plus">+</span></button>
+          <div class="faq-a">Dry clean only. Spot-clean small marks with a damp cloth between cleanings.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="press-strip" data-aos="fade-up">
+    <div class="wrap">
+      <p class="label">As Featured In</p>
+      <div class="press-row"><span>VOGUE INDIA</span><span>GQ</span><span>The Hindu</span><span>Elle</span><span>Mint Lounge</span></div>
+    </div>
+  </section>
+
+  <section class="cta-banner" data-aos="fade-up">
+    <h2>Still deciding?</h2>
+    <p>Add it to your wishlist and we'll let you know if it ever goes on sale.</p>
+    <a href="404.html" class="btn btn-gold magnetic">Keep Browsing</a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></a>
+        <p>A fashion house for considered wardrobes, designed and shipped from Salem, Tamil Nadu.</p>
+        <div class="footer-social">
+          <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="404.html" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          <a href="404.html" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Shop</h5>
+        <a href="404.html">Outerwear</a><a href="404.html">Knitwear</a><a href="404.html">Denim</a><a href="404.html">Accessories</a>
+      </div>
+      <div class="footer-col"><h5>Company</h5>
+       <a href="index.html">Home</a> <a href="about.html">About</a><a href="contact.html">Contact</a><a href="account.html">Account</a><a href="cart.html">Bag</a>
+      </div>
+      <div class="footer-col"><h5>Visit</h5>
+        <a href="404.html">MMR Complex, Salem, Tamil Nadu</a><a href="404.html">+91 63800 00000</a><a href="404.html">hello@stackly.in</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> Stackly. All rights reserved.</span>
+      <span>Designed in Salem, Tamil Nadu</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ---- PRODUCT DATA ----
+  const products = {
+    p1: {
+      id: 'p1',
+      name: 'Tailored Wool Coat',
+      category: 'Outerwear / Coats',
+      price: 148.00,
+      rating: 4.8,
+      reviews: 236,
+      stars: '★★★★★',
+      sku: 'STK-OW-0142',
+      material: '70% Wool, 30% Recycled Polyester',
+      care: 'Dry clean only',
+      description: 'A double-faced wool-blend overcoat with a clean, tailored silhouette. Structured shoulders, a single-button close, and a fully lined interior make this the piece you reach for from the first cold morning through the last.',
+      descText: 'Cut from a heavyweight double-faced wool blend, this overcoat is built around a structured shoulder and a single horn button at the chest. The fully lined interior includes an interior pocket sized for a phone, and the collar is cut high enough to stand up against wind without a scarf. Designed in Salem, sourced from mills in Ludhiana.',
+      image: './images/Tailored Wool Coat.webp',
+      thumb1: './images/Tailored Wool Coat1.webp',
+      thumb2: './images/Tailored Wool Coat2.webp',
+      thumb3: './images/Tailored Wool Coat3.webp',
+      thumb4: './images/Tailored Wool Coat4.webp',
+      colors: ['#221C1A', '#6E2A3A', '#ECE5D6'],
+      colorNames: ['Charcoal', 'Wine', 'Ivory'],
+      reviewsData: [
+        { name: 'Meera K.', rating: '★★★★★', text: 'Fits exactly as described, and the wool feels genuinely premium. Worth every rupee.' },
+        { name: 'Arjun V.', rating: '★★★★☆', text: 'Great coat, slightly heavier than I expected but that\'s not a complaint in winter.' },
+        { name: 'Priya S.', rating: '★★★★★', text: 'Bought in charcoal, already eyeing the wine colorway for a second one.' }
+      ]
+    },
+    p2: {
+      id: 'p2',
+      name: 'Ribbed Knit Sweater',
+      category: 'Knitwear',
+      price: 68.00,
+      rating: 4.6,
+      reviews: 189,
+      stars: '★★★★☆',
+      sku: 'STK-KN-027',
+      material: '100% Merino Wool',
+      care: 'Hand wash cold, lay flat to dry',
+      description: 'A classic ribbed knit sweater in premium merino wool. Soft, breathable, and naturally warm — the perfect layering piece for any season.',
+      descText: 'Crafted from 100% merino wool, this ribbed knit sweater offers exceptional softness and natural temperature regulation. The classic crew neck and ribbed cuffs create a timeless silhouette that works equally well under a coat or on its own.',
+      image: './images/Ribbed Knit Sweater.webp',
+      thumb1: './images/Ribbed Knit Sweater.webp',
+      thumb2: './images/Ribbed Knit Sweater.webp',
+      thumb3: './images/Ribbed Knit Sweater.webp',
+      thumb4: './images/Ribbed Knit Sweater.webp',
+      colors: ['#6E2A3A', '#ECE5D6', '#4A4A4A'],
+      colorNames: ['Wine', 'Ivory', 'Charcoal'],
+      reviewsData: [
+        { name: 'Sara J.', rating: '★★★★★', text: 'This sweater is incredibly soft and warm. Perfect for layering.' },
+        { name: 'Vikram P.', rating: '★★★★☆', text: 'Great quality, fits true to size. Would buy again.' },
+        { name: 'Ananya R.', rating: '★★★★★', text: 'The merino wool is so comfortable against the skin. Love it!' }
+      ]
+    },
+    p3: {
+      id: 'p3',
+      name: 'Straight Leg Denim',
+      category: 'Denim',
+      price: 58.00,
+      rating: 4.4,
+      reviews: 312,
+      stars: '★★★★☆',
+      sku: 'STK-DN-009',
+      material: '98% Cotton, 2% Elastane',
+      care: 'Machine wash cold, tumble dry low',
+      description: 'Straight leg denim with a classic fit and just the right amount of stretch. A versatile silhouette that pairs with everything.',
+      descText: 'These straight leg jeans are crafted from premium cotton denim with a hint of elastane for comfort and movement. The classic five-pocket design and clean hem create a timeless silhouette that works for any occasion.',
+      image: './images/Straight Leg Denim.webp',
+      thumb1: './images/Straight Leg Denim.webp',
+      thumb2: './images/Straight Leg Denim2.webp',
+      thumb3: './images/Straight Leg Denim3.webp',
+      thumb4: './images/Straight Leg Denim4.webp',
+      colors: ['#221C1A', '#7C8C6B'],
+      colorNames: ['Black', 'Sage'],
+      reviewsData: [
+        { name: 'Rahul M.', rating: '★★★★☆', text: 'Great fit, very comfortable. The stretch makes all the difference.' },
+        { name: 'Neha S.', rating: '★★★★★', text: 'Perfect everyday jeans. Love the straight leg silhouette.' },
+        { name: 'Gowtham R.', rating: '★★★★☆', text: 'Quality denim, holds up well after multiple washes.' }
+      ]
+    },
+    p4: {
+      id: 'p4',
+      name: 'Leather Crossbody Bag',
+      category: 'Accessories',
+      price: 96.00,
+      rating: 4.9,
+      reviews: 427,
+      stars: '★★★★★',
+      sku: 'STK-AC-018',
+      material: 'Responsibly Tanned Leather',
+      care: 'Wipe with soft cloth, condition occasionally',
+      description: 'A compact leather crossbody bag with a clean, sculptural silhouette. Perfect for carrying essentials with style.',
+      descText: 'Crafted from responsibly tanned leather, this crossbody bag features a sleek, minimal design with an adjustable strap and secure zip closure. The interior is lined with cotton and includes a small slip pocket for your phone or cards.',
+      image: './images/Leather Crossbody Bag.webp',
+      thumb1: './images/Leather Crossbody Bag1.webp',
+      thumb2: './images/Leather Crossbody Bag3.webp',
+      thumb3: './images/Leather Crossbody Bag4.webp',
+      thumb4: './images/Leather Crossbody Bag5.webp',
+      colors: ['#221C1A', '#6E2A3A', '#C9A227'],
+      colorNames: ['Black', 'Wine', 'Gold'],
+      reviewsData: [
+        { name: 'Priya S.', rating: '★★★★★', text: 'The quality of the leather is exceptional. This bag is my new go-to.' },
+        { name: 'Aisha K.', rating: '★★★★★', text: 'Beautiful design, fits all my essentials. Love the adjustable strap.' },
+        { name: 'Meera K.', rating: '★★★★★', text: 'Perfect size and the leather is so soft. Highly recommend.' }
+      ]
+    },
+    p5: {
+      id: 'p5',
+      name: 'Cashmere Blend Scarf',
+      category: 'Accessories',
+      price: 42.00,
+      rating: 4.5,
+      reviews: 156,
+      stars: '★★★★☆',
+      sku: 'STK-AC-023',
+      material: '80% Cashmere, 20% Silk',
+      care: 'Dry clean recommended',
+      description: 'A luxuriously soft scarf in a cashmere-silk blend. Lightweight yet warm, it adds elegance to any outfit.',
+      descText: 'This cashmere-silk blend scarf offers the perfect balance of warmth and breathability. The soft, lightweight fabric drapes beautifully and adds a touch of luxury to any look.',
+      image: './images/Cashmere Scarf.webp',
+      thumb1: './images/Cashmere Scarf.webp',
+      thumb2: './images/Cashmere Scarf.webp',
+      thumb3: './images/Cashmere Scarf.webp',
+      thumb4: './images/Cashmere Scarf.webp',
+      colors: ['#ECE5D6', '#4A4A4A', '#C9A227'],
+      colorNames: ['Ivory', 'Charcoal', 'Gold'],
+      reviewsData: [
+        { name: 'Sara J.', rating: '★★★★★', text: 'So soft and luxurious. The cashmere blend is heavenly.' },
+        { name: 'Rahul M.', rating: '★★★★☆', text: 'Great quality, very elegant. Perfect for special occasions.' },
+        { name: 'Ananya R.', rating: '★★★★★', text: 'Love the feel of this scarf. It\'s become my favorite accessory.' }
+      ]
+    },
+    p6: {
+      id: 'p6',
+      name: 'Oversized Linen Shirt',
+      category: 'Knitwear',
+      price: 54.00,
+      rating: 4.3,
+      reviews: 98,
+      stars: '★★★★☆',
+      sku: 'STK-KN-032',
+      material: '100% Linen',
+      care: 'Machine wash cold, line dry',
+      description: 'A relaxed, oversized shirt in breathable linen. Perfect for warm days and effortless style.',
+      descText: 'Made from 100% premium linen, this oversized shirt offers breathable comfort and a relaxed silhouette. The dropped shoulders and generous cut create an effortless, lived-in look that works for any occasion.',
+      image: './images/Oversized Linen Shirt.webp',
+      thumb1: './images/Oversized Linen Shirt.webp',
+      thumb2: './images/Oversized Linen Shirt.webp',
+      thumb3: './images/Oversized Linen Shirt.webp',
+      thumb4: './images/Oversized Linen Shirt.webp',
+      colors: ['#ECE5D6', '#7C8C6B'],
+      colorNames: ['Ivory', 'Sage'],
+      reviewsData: [
+        { name: 'Vikram P.', rating: '★★★★☆', text: 'Great summer shirt. The linen is breathable and the fit is perfect.' },
+        { name: 'Neha S.', rating: '★★★★★', text: 'Love the relaxed fit. Perfect for casual days.' }
+      ]
+    },
+    p7: {
+      id: 'p7',
+      name: 'Cropped Denim Jacket',
+      category: 'Denim',
+      price: 88.00,
+      rating: 4.7,
+      reviews: 203,
+      stars: '★★★★★',
+      sku: 'STK-DN-015',
+      material: '100% Cotton Denim',
+      care: 'Machine wash cold, tumble dry low',
+      description: 'A cropped denim jacket with a modern silhouette. The perfect layering piece for any season.',
+      descText: 'This cropped denim jacket features a modern, boxy silhouette with classic detailing. The slightly cropped length makes it perfect for layering over dresses, skirts, or high-waisted pants.',
+      image: './images/Cropped Denim Jacket.webp',
+      thumb1: './images/Cropped Denim Jacket1.webp',
+      thumb2: './images/Cropped Denim Jacket3.webp',
+      thumb3: './images/Cropped Denim Jacket4.webp',
+      thumb4: './images/Cropped Denim Jacket2.webp',
+      colors: ['#221C1A', '#7C8C6B'],
+      colorNames: ['Black', 'Sage'],
+      reviewsData: [
+        { name: 'Meera K.', rating: '★★★★★', text: 'Love the cropped length. Perfect for layering.' },
+        { name: 'Arjun V.', rating: '★★★★★', text: 'Great quality denim, fits perfectly.' }
+      ]
+    },
+    p8: {
+      id: 'p8',
+      name: 'Leather Belt',
+      category: 'Accessories',
+      price: 34.00,
+      rating: 4.2,
+      reviews: 87,
+      stars: '★★★★☆',
+      sku: 'STK-AC-024',
+      material: 'Responsibly Tanned Leather',
+      care: 'Wipe with soft cloth',
+      description: 'A classic leather belt with a minimal brass buckle. The perfect finishing touch for any outfit.',
+      descText: 'Crafted from responsibly tanned leather with a minimal brass buckle, this belt is a timeless accessory that completes any look. The simple, clean design makes it versatile enough for both casual and formal wear.',
+      image: './images/Leather Belt.webp',
+      thumb1: './images/Leather Belt1.webp',
+      thumb2: './images/Leather Belt3.webp',
+      thumb3: './images/Leather Belt4.webp',
+      thumb4: './images/Leather Belt2.webp',
+      colors: ['#221C1A', '#6E2A3A'],
+      colorNames: ['Black', 'Wine'],
+      reviewsData: [
+        { name: 'Gowtham R.', rating: '★★★★☆', text: 'Solid belt, good quality leather. The buckle is elegant.' },
+        { name: 'Aisha K.', rating: '★★★★★', text: 'Perfect finishing touch for any outfit. Love it!' }
+      ]
+    }
+  };
+
+  // ---- GET PRODUCT ID FROM URL ----
+  function getProductId() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id') || 'p1';
+  }
+
+  // ---- RENDER PRODUCT ----
+  function renderProduct() {
+    const productId = getProductId();
+    const product = products[productId];
+
+    if (!product) {
+      // If product not found, redirect to shop
+      window.location.href = 'shop.html';
+      return;
+    }
+
+    // Update page title
+    document.title = product.name + ' — Stackly';
+
+    // Update breadcrumb
+    const breadcrumb = document.querySelector('.breadcrumb');
+    if (breadcrumb) {
+      breadcrumb.innerHTML = `<a href="index.html">Home</a> <span>/</span> <a href="shop.html">Shop</a> <span>/</span> <span>${product.name}</span>`;
+    }
+
+    // Update product info
+    document.getElementById('productCategory').textContent = product.category;
+    document.getElementById('productName').textContent = product.name;
+    document.getElementById('productStars').textContent = product.stars;
+    document.getElementById('productRating').textContent = `${product.rating} (${product.reviews} reviews)`;
+    document.getElementById('productPrice').textContent = '$' + product.price.toFixed(2);
+    document.getElementById('productDesc').textContent = product.description;
+    document.getElementById('productSku').textContent = product.sku;
+    document.getElementById('productMaterial').textContent = product.material;
+    document.getElementById('productCare').textContent = product.care;
+    document.getElementById('descText').textContent = product.descText;
+
+    // Update Add to Bag button
+    const addBtn = document.getElementById('addToBagBtn');
+    addBtn.dataset.id = product.id;
+    addBtn.dataset.name = product.name;
+    addBtn.dataset.price = product.price;
+    addBtn.dataset.img = product.image;
+    addBtn.textContent = `Add to Bag — $${product.price.toFixed(2)}`;
+
+    // Update main image
+    document.getElementById('mainImage').src = product.image;
+    document.getElementById('mainImage').alt = product.name;
+
+    // Update thumbnails
+    const thumbs = document.querySelectorAll('.pd-thumbs img');
+    if (thumbs.length >= 4) {
+      thumbs[0].src = product.thumb1;
+      thumbs[0].alt = product.name + ' front view';
+      thumbs[1].src = product.thumb2;
+      thumbs[1].alt = product.name + ' side view';
+      thumbs[2].src = product.thumb3;
+      thumbs[2].alt = product.name + ' detail view';
+      thumbs[3].src = product.thumb4;
+      thumbs[3].alt = product.name + ' worn view';
+    }
+
+    // Update color swatches
+    const swatchRow = document.getElementById('colorSwatches');
+    const colorLabel = document.getElementById('colorLabel');
+    swatchRow.innerHTML = '';
+    product.colors.forEach((color, index) => {
+      const swatch = document.createElement('div');
+      swatch.className = 'swatch' + (index === 0 ? ' active' : '');
+      swatch.style.background = color;
+      if (color === '#ECE5D6') {
+        swatch.style.border = '1px solid #ddd';
+      }
+      swatch.dataset.color = product.colorNames[index];
+      swatchRow.appendChild(swatch);
+    });
+    if (product.colorNames.length > 0) {
+      colorLabel.textContent = 'Color — ' + product.colorNames[0];
+    }
+
+    // Update reviews
+    const reviewsContainer = document.getElementById('reviewsContainer');
+    const reviewsTab = document.getElementById('reviewsTab');
+    if (reviewsTab) {
+      reviewsTab.textContent = 'Reviews (' + product.reviews + ')';
+    }
+    reviewsContainer.innerHTML = '';
+    product.reviewsData.forEach(review => {
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      item.innerHTML = `<span class="stars">${review.rating}</span> <span class="name">${review.name}</span><p>${review.text}</p>`;
+      reviewsContainer.appendChild(item);
+    });
+
+    // Re-initialize color swatch click handlers
+    document.querySelectorAll('.swatch-row').forEach(row => {
+      row.addEventListener('click', e => {
+        const sw = e.target.closest('.swatch');
+        if (!sw) return;
+        row.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        const label = document.getElementById('colorLabel');
+        if (label && sw.dataset.color) {
+          label.textContent = 'Color — ' + sw.dataset.color;
+        }
+      });
+    });
+
+    // Re-initialize Add to Cart
+    document.querySelectorAll('[data-add-cart]').forEach(btn => {
+      btn.removeEventListener('click', handleAddToCart);
+      btn.addEventListener('click', handleAddToCart);
+    });
+  }
+
+  function handleAddToCart(e) {
+    e.preventDefault();
+    const btn = e.currentTarget;
+    window.stacklyCart.add({
+      id: btn.dataset.id,
+      name: btn.dataset.name,
+      price: parseFloat(btn.dataset.price),
+      img: btn.dataset.img,
+      size: document.querySelector('.size-pill.active')?.textContent || 'M',
+      qty: parseInt(document.querySelector('.qty-control input')?.value || 1)
+    });
+  }
+
+  // ---- INIT ----
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get product ID from URL
+    const productId = getProductId();
+
+    // If product exists, render it
+    if (products[productId]) {
+      renderProduct();
+    } else {
+      // If product not found, try to find by partial match or redirect
+      const productKeys = Object.keys(products);
+      const foundKey = productKeys.find(key => key === productId);
+      if (foundKey) {
+        renderProduct();
+      } else {
+        // Redirect to shop
+        window.location.href = 'shop.html';
+      }
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

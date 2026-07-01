@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Stackly</title>
+<meta name="description" content="Get in touch with Stackly — premium customer support, personal styling, and fashion consultation services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<style>
+/* ===========================================================
+   STACKLY — Complete Contact Page Styles
+=========================================================== */
+:root {
+  --ivory: #F5F1E8;
+  --ivory-deep: #ECE5D6;
+  --ink: #221C1A;
+  --ink-soft: #4A413C;
+  --wine: #6E2A3A;
+  --wine-deep: #4F1D29;
+  --gold: #C9A227;
+  --gold-light: #D4C5B8;
+  --sage: #7C8C6B;
+  --line: rgba(34,28,26,0.1);
+  --glass-bg: rgba(245,241,232,0.55);
+  --glass-border: rgba(255,255,255,0.3);
+  --shadow-soft: 0 20px 60px rgba(30,27,24,0.06);
+  --shadow-medium: 0 30px 80px rgba(30,27,24,0.08);
+  --shadow-large: 0 40px 100px rgba(30,27,24,0.12);
+  --radius: 2px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --ff-display: 'Fraunces', serif;
+  --ff-body: 'Inter', sans-serif;
+  --ff-mono: 'JetBrains Mono', monospace;
+  --maxw: 1440px;
+  --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--ff-body);
+  background: var(--ivory);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--ff-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.eyebrow {
+  font-family: var(--ff-mono);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--wine);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: var(--wine);
+}
+.eyebrow.gold {
+  color: var(--gold);
+}
+.eyebrow.gold::before {
+  background: var(--gold);
+}
+.eyebrow.light {
+  color: rgba(255,255,255,0.6);
+}
+.eyebrow.light::before {
+  background: rgba(255,255,255,0.4);
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* ===== PRELOADER ===== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--ivory);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+.preloader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+.preloader span {
+  font-family: var(--ff-display);
+  font-size: 2rem;
+  letter-spacing: .05em;
+}
+.preloader span em {
+  font-style: italic;
+  color: var(--wine);
+}
+
+/* ===== SIDE MARK ===== */
+.side-mark {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+.side-mark span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--ff-mono);
+  font-size: .68rem;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--ivory);
+}
+@media (max-width: 860px) {
+  .side-mark {
+    display: none;
+  }
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 18px 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid var(--glass-border);
+  transition: padding .35s ease, background .35s ease;
+}
+.navbar.scrolled {
+  padding: 10px 0;
+  background: rgba(245, 241, 232, 0.86);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-left: 54px;
+}
+.logo {
+  font-family: var(--ff-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.logo em {
+  font-style: normal;
+  color: var(--wine);
+}
+.nav-links {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+.nav-links a {
+  font-size: .86rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  padding: 4px 0;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--wine);
+  transition: width .3s ease;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+.nav-links a.active {
+  color: var(--wine);
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  position: relative;
+  transition: all .25s ease;
+}
+.icon-btn:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ivory);
+  transform: translateY(-2px);
+}
+.icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--wine);
+  color: var(--ivory);
+  font-family: var(--ff-mono);
+  font-size: .62rem;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 30px;
+ position: relative; z-index: 2000; }
+.hamburger span {
+  height: 1.5px;
+  background: var(--ink);
+  width: 100%;
+  transition: .3s;
+}
+@media (max-width: 980px) {
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: min(320px, 80vw);
+    background: var(--ivory);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    gap: 26px;
+    transition: right .4s ease;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, .12);
+  }
+  .nav-links.open {
+    right: 0;
+  }
+  .hamburger {
+    display: flex;
+   position: relative; z-index: 2000; }
+  .nav-inner {
+    padding-left: 0;
+  }
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 32px;
+  font-size: .82rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: var(--radius);
+  transition: all .3s ease;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--ivory);
+}
+.btn-primary:hover {
+  background: var(--wine);
+}
+.btn-outline {
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--ivory);
+}
+.btn-gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+.btn-gold:hover {
+  background: var(--wine);
+  color: var(--ivory);
+}
+.btn-white {
+  background: var(--ivory);
+  color: var(--ink);
+}
+.btn-white:hover {
+  background: var(--gold-light);
+}
+.btn-lg {
+  padding: 20px 48px;
+  font-size: .85rem;
+}
+.btn-block {
+  width: 100%;
+}
+.magnetic {
+  position: relative;
+  display: inline-block;
+}
+
+/* ===== SECTION HEAD ===== */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+.section-head h2 {
+  font-size: clamp(2rem, 3.4vw, 3rem);
+}
+.section-head p {
+  color: var(--ink-soft);
+  max-width: 400px;
+}
+@media (max-width: 768px) {
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+/* ===========================================================
+   CONTACT PAGE — Premium Sections
+=========================================================== */
+
+/* ---- 1. HERO ---- */
+.contact-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 120px;
+  padding-bottom: 60px;
+  overflow: hidden;
+  background: linear-gradient(175deg, var(--ivory) 0%, var(--ivory-deep) 100%);
+}
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(ellipse, rgba(185, 162, 140, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.contact-hero .floating-shape {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.05;
+  background: var(--wine);
+  animation: floatShape 8s ease-in-out infinite;
+}
+.contact-hero .floating-shape:nth-child(1) {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  left: -5%;
+  animation-delay: 0s;
+}
+.contact-hero .floating-shape:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  bottom: 20%;
+  right: -5%;
+  animation-delay: 2s;
+}
+.contact-hero .floating-shape:nth-child(3) {
+  width: 150px;
+  height: 150px;
+  top: 50%;
+  left: 40%;
+  animation-delay: 4s;
+}
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.1); }
+}
+.contact-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+.contact-hero-content .breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+  animation: fadeDown 0.8s var(--transition-smooth) forwards;
+  opacity: 0;
+}
+.contact-hero-content .breadcrumb a {
+  color: var(--ink-soft);
+  transition: color .3s;
+}
+.contact-hero-content .breadcrumb a:hover {
+  color: var(--wine);
+}
+.contact-hero-content .breadcrumb .current {
+  color: var(--wine);
+}
+@keyframes fadeDown {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.contact-hero-content h1 {
+  font-size: clamp(3rem, 6vw, 5.2rem);
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+.contact-hero-content h1 .line {
+  display: block;
+  overflow: hidden;
+}
+.contact-hero-content h1 .line span {
+  display: inline-block;
+  animation: splitReveal 1s var(--transition-smooth) forwards;
+  opacity: 0;
+  transform: translateY(60px);
+}
+.contact-hero-content h1 .line:nth-child(1) span { animation-delay: 0.1s; }
+.contact-hero-content h1 .line:nth-child(2) span { animation-delay: 0.2s; }
+.contact-hero-content h1 .line:nth-child(3) span { animation-delay: 0.3s; }
+@keyframes splitReveal {
+  0% { opacity: 0; transform: translateY(60px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.contact-hero-content p {
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  max-width: 480px;
+  margin-bottom: 36px;
+  animation: fadeUp 0.8s var(--transition-smooth) 0.4s forwards;
+  opacity: 0;
+}
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.contact-hero-content .hero-stats {
+  display: flex;
+  gap: 48px;
+  animation: fadeUp 0.8s var(--transition-smooth) 0.6s forwards;
+  opacity: 0;
+}
+.contact-hero-content .hero-stats div b {
+  font-family: var(--ff-display);
+  font-size: 1.8rem;
+  display: block;
+}
+.contact-hero-content .hero-stats div span {
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+}
+.scroll-indicator-contact {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-family: var(--ff-mono);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  animation: fadeUp 1s var(--transition-smooth) 0.8s forwards;
+  opacity: 0;
+}
+.scroll-indicator-contact .mouse {
+  width: 20px;
+  height: 32px;
+  border: 1.5px solid var(--ink-soft);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.scroll-indicator-contact .mouse .wheel {
+  width: 2px;
+  height: 8px;
+  background: var(--ink-soft);
+  border-radius: 2px;
+  animation: scrollWheel 1.5s ease-in-out infinite;
+}
+@keyframes scrollWheel {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(6px); opacity: 0.3; }
+}
+.grain-overlay-contact {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.012;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+@media (max-width: 768px) {
+  .contact-hero-content .hero-stats {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .contact-hero-content .hero-stats div b {
+    font-size: 1.4rem;
+  }
+}
+
+/* ---- 2. CONTACT METHODS ---- */
+.contact-methods {
+  padding: 100px 0;
+  background: var(--ivory);
+}
+.contact-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.contact-method-card {
+  padding: 32px 24px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: all 0.5s var(--transition-smooth);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.contact-method-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--gold-light), transparent);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.contact-method-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--gold);
+}
+.contact-method-card:hover::before {
+  opacity: 0.1;
+}
+.contact-method-card .icon {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.contact-method-card h4 {
+  font-family: var(--ff-body);
+  font-size: .95rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.contact-method-card p {
+  font-size: .82rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+.contact-method-card .glow {
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(185, 162, 140, 0.1), transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.contact-method-card:hover .glow {
+  opacity: 1;
+}
+@media (max-width: 980px) {
+  .contact-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .contact-methods-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- 3. CLIENT ADVISORS ---- */
+.advisors-section {
+  padding: 100px 0;
+  background: var(--ivory-deep);
+}
+.advisors-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.advisor-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  transition: all 0.5s var(--transition-smooth);
+  perspective: 800px;
+}
+.advisor-card:hover {
+  transform: translateY(-6px) rotateX(2deg);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--gold);
+}
+.advisor-card .image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+.advisor-card .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--transition-smooth);
+}
+.advisor-card:hover .image img {
+  transform: scale(1.04);
+}
+.advisor-card .image .status {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(30, 27, 24, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  color: var(--ivory);
+  font-family: var(--ff-mono);
+  font-size: .6rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.advisor-card .image .status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4CAF50;
+  animation: pulseDot 1.5s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+.advisor-card .info {
+  padding: 24px;
+}
+.advisor-card .info h4 {
+  font-family: var(--ff-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.advisor-card .info .title {
+  font-size: .82rem;
+  color: var(--wine);
+  font-weight: 500;
+}
+.advisor-card .info .details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.advisor-card .info .details span {
+  font-size: .7rem;
+  padding: 3px 12px;
+  background: var(--ivory-deep);
+  border-radius: 12px;
+  font-family: var(--ff-mono);
+  color: var(--ink-soft);
+}
+.advisor-card .info .btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  font-size: .7rem;
+  border-radius: 40px;
+}
+@media (max-width: 980px) {
+  .advisors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .advisors-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- 4. STUDIO VISIT ---- */
+.studio-visit {
+  padding: 100px 0;
+  background: var(--ivory);
+}
+.studio-visit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+.studio-visit-grid .studio-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  aspect-ratio: 4/3;
+}
+.studio-visit-grid .studio-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--transition-smooth);
+}
+.studio-visit-grid .studio-image:hover img {
+  transform: scale(1.04);
+}
+.studio-visit-grid .studio-image .floating-card {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  background: rgba(245, 241, 234, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  font-size: .82rem;
+}
+.studio-visit-grid .studio-image .floating-card b {
+  display: block;
+  font-size: 1.1rem;
+}
+.studio-visit-grid .studio-info .feature {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.studio-visit-grid .studio-info .feature:last-child {
+  border-bottom: none;
+}
+.studio-visit-grid .studio-info .feature .icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.studio-visit-grid .studio-info .feature h4 {
+  font-family: var(--ff-body);
+  font-size: .95rem;
+  font-weight: 600;
+}
+.studio-visit-grid .studio-info .feature p {
+  color: var(--ink-soft);
+  font-size: .88rem;
+}
+.studio-visit-grid .studio-info .location-pins {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.studio-visit-grid .studio-info .location-pins span {
+  padding: 6px 14px;
+  background: var(--ivory-deep);
+  border-radius: 20px;
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  color: var(--ink-soft);
+}
+@media (max-width: 768px) {
+  .studio-visit-grid {
+    grid-template-columns: 1fr;
+  }
+  .studio-visit-grid .studio-image .floating-card {
+    bottom: 12px;
+    right: 12px;
+    padding: 12px 16px;
+    font-size: .7rem;
+  }
+}
+
+/* ---- 5. WORLD MAP ---- */
+.map-section {
+  padding: 80px 0;
+  background: var(--ivory-deep);
+}
+.map-container {
+  position: relative;
+  aspect-ratio: 16/9;
+  background: var(--ivory);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.map-container .map-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: radial-gradient(ellipse at center, var(--ivory-deep) 0%, var(--ivory) 100%);
+}
+.map-container .map-placeholder .location-marker {
+  position: absolute;
+  animation: pulseMarker 2s ease-in-out infinite;
+}
+.map-container .map-placeholder .location-marker::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--wine);
+  animation: pulseRing 2s ease-in-out infinite;
+}
+.map-container .map-placeholder .location-marker:nth-child(1) { top: 30%; left: 20%; animation-delay: 0s; }
+.map-container .map-placeholder .location-marker:nth-child(2) { top: 45%; left: 55%; animation-delay: 0.6s; }
+.map-container .map-placeholder .location-marker:nth-child(3) { top: 65%; left: 35%; animation-delay: 1.2s; }
+.map-container .map-placeholder .location-marker:nth-child(4) { top: 25%; left: 70%; animation-delay: 0.3s; }
+.map-container .map-placeholder .location-marker:nth-child(5) { top: 55%; left: 75%; animation-delay: 0.9s; }
+.map-container .map-placeholder .location-marker:nth-child(6) { top: 70%; left: 55%; animation-delay: 1.5s; }
+.map-container .map-placeholder .location-marker .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--wine);
+  position: relative;
+  z-index: 2;
+}
+.map-container .map-placeholder .location-marker .tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--ivory);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: var(--ff-mono);
+  font-size: .6rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+.map-container .map-placeholder .location-marker:hover .tooltip {
+  opacity: 1;
+}
+@keyframes pulseRing {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(2); opacity: 0; }
+}
+.map-container .map-placeholder .connection-line {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, var(--wine), transparent);
+  opacity: 0.2;
+  transform-origin: left center;
+}
+.map-container .map-placeholder .connection-line:nth-child(7) { top: 40%; left: 25%; width: 30%; transform: rotate(15deg); }
+.map-container .map-placeholder .connection-line:nth-child(8) { top: 50%; left: 30%; width: 25%; transform: rotate(-10deg); }
+.map-container .map-placeholder .connection-line:nth-child(9) { top: 60%; left: 20%; width: 35%; transform: rotate(5deg); }
+.map-label {
+  text-align: center;
+  margin-top: 16px;
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+}
+
+/* ---- 6. SUPPORT JOURNEY ---- */
+.support-journey {
+  padding: 100px 0;
+  background: var(--ivory);
+}
+.journey-timeline {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  position: relative;
+  padding-top: 40px;
+}
+.journey-timeline::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--line);
+}
+.journey-timeline::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 10%;
+  height: 2px;
+  background: var(--wine);
+  width: 0%;
+  animation: drawLine 1.5s var(--transition-smooth) forwards;
+}
+@keyframes drawLine {
+  0% { width: 0%; }
+  100% { width: 80%; }
+}
+.journey-step {
+  text-align: center;
+  position: relative;
+}
+.journey-step .step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ivory-deep);
+  border: 2px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-family: var(--ff-mono);
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  transition: all .5s;
+  position: relative;
+  z-index: 2;
+}
+.journey-step:hover .step-number {
+  background: var(--wine);
+  border-color: var(--wine);
+  color: var(--ivory);
+  transform: scale(1.1);
+}
+.journey-step .icon {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 8px;
+}
+.journey-step h4 {
+  font-family: var(--ff-body);
+  font-size: .85rem;
+  font-weight: 600;
+}
+.journey-step p {
+  font-size: .75rem;
+  color: var(--ink-soft);
+}
+@media (max-width: 860px) {
+  .journey-timeline {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  .journey-timeline::before {
+    display: none;
+  }
+  .journey-timeline::after {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .journey-timeline {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---- 7. CONCIERGE SERVICES ---- */
+.concierge-section {
+  padding: 100px 0;
+  background: var(--ivory-deep);
+}
+.concierge-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.concierge-card {
+  padding: 28px 20px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  text-align: center;
+  transition: all 0.5s var(--transition-smooth);
+}
+.concierge-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+  border-color: var(--gold);
+}
+.concierge-card .icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+.concierge-card h4 {
+  font-family: var(--ff-body);
+  font-size: .9rem;
+  font-weight: 600;
+}
+.concierge-card p {
+  font-size: .78rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+@media (max-width: 980px) {
+  .concierge-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .concierge-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- 8. CUSTOMER REVIEWS ---- */
+.reviews-section {
+  padding: 80px 0;
+  background: var(--ivory);
+}
+.reviews-carousel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.review-card {
+  padding: 28px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  transition: all 0.5s var(--transition-smooth);
+}
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+  border-color: var(--gold);
+}
+.review-card .stars {
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 10px;
+}
+.review-card q {
+  font-family: var(--ff-display);
+  font-size: .98rem;
+  font-style: italic;
+  display: block;
+  line-height: 1.6;
+}
+.review-card .author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+.review-card .author img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.review-card .author .name {
+  font-weight: 600;
+  font-size: .88rem;
+}
+.review-card .author .location {
+  font-size: .75rem;
+  color: var(--ink-soft);
+}
+@media (max-width: 768px) {
+  .reviews-carousel {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- 9. SOCIAL COMMUNITY ---- */
+.social-section {
+  padding: 80px 0;
+  background: var(--ivory-deep);
+}
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.social-card {
+  padding: 24px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  text-align: center;
+  transition: all 0.5s var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+.social-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(185, 162, 140, 0.05), transparent);
+  opacity: 0;
+  transition: opacity .5s;
+}
+.social-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+  border-color: var(--gold);
+}
+.social-card:hover::before {
+  opacity: 1;
+}
+.social-card .icon {
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: 10px;
+}
+.social-card h4 {
+  font-family: var(--ff-body);
+  font-size: .95rem;
+  font-weight: 600;
+}
+.social-card .followers {
+  font-size: .82rem;
+  color: var(--ink-soft);
+}
+.social-card .btn {
+  margin-top: 12px;
+  padding: 8px 24px;
+  font-size: .7rem;
+  border-radius: 40px;
+}
+@media (max-width: 768px) {
+  .social-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- 10. FAQ PREMIUM ---- */
+.faq-section {
+  padding: 100px 0;
+  background: var(--ivory);
+}
+.faq-accordion {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.faq-accordion .faq-item {
+  border-bottom: 1px solid var(--line);
+  transition: all .5s;
+}
+.faq-accordion .faq-item:last-child {
+  border-bottom: none;
+}
+.faq-accordion .faq-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.faq-accordion .faq-q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  text-align: left;
+  font-family: var(--ff-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  transition: color .3s;
+}
+.faq-accordion .faq-q:hover {
+  color: var(--wine);
+}
+.faq-accordion .faq-q .plus {
+  font-family: var(--ff-mono);
+  font-size: 1.2rem;
+  color: var(--wine);
+  transition: transform .3s ease;
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+.faq-accordion .faq-item.open .faq-q .plus {
+  transform: rotate(45deg);
+}
+.faq-accordion .faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s var(--transition-smooth);
+  color: var(--ink-soft);
+  font-size: .94rem;
+}
+.faq-accordion .faq-item.open .faq-a {
+  max-height: 200px;
+  padding-bottom: 24px;
+}
+
+/* ---- 11. LIVE SUPPORT BAR ---- */
+.live-support-bar {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 28px;
+  background: rgba(245, 241, 234, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 60px;
+  box-shadow: var(--shadow-large);
+  animation: floatUp 0.8s var(--transition-smooth) forwards;
+  opacity: 0;
+  transform: translateY(40px);
+}
+@keyframes floatUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.live-support-bar .live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4CAF50;
+  animation: pulseDot 1.5s ease-in-out infinite;
+}
+.live-support-bar .info {
+  font-size: .78rem;
+}
+.live-support-bar .info b {
+  font-weight: 600;
+}
+.live-support-bar .info .count {
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  color: var(--ink-soft);
+}
+.live-support-bar .btn {
+  padding: 8px 20px;
+  font-size: .7rem;
+  border-radius: 40px;
+}
+@media (max-width: 640px) {
+  .live-support-bar {
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    border-radius: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 14px 20px;
+    gap: 12px;
+  }
+}
+
+/* ---- 12. CTA ---- */
+.cta-editorial-contact {
+  padding: 120px 0;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--wine-deep) 50%, var(--wine) 100%);
+  color: var(--ivory);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-editorial-contact::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 60%;
+  height: 100%;
+  background: radial-gradient(ellipse, rgba(185, 162, 140, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-editorial-contact .particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cta-editorial-contact .particles span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: floatParticle 8s ease-in-out infinite;
+}
+.cta-editorial-contact .particles span:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.cta-editorial-contact .particles span:nth-child(2) { top: 60%; left: 80%; animation-delay: 1.5s; }
+.cta-editorial-contact .particles span:nth-child(3) { top: 30%; left: 70%; animation-delay: 3s; }
+.cta-editorial-contact .particles span:nth-child(4) { top: 70%; left: 20%; animation-delay: 4.5s; }
+.cta-editorial-contact .particles span:nth-child(5) { top: 80%; left: 50%; animation-delay: 6s; }
+@keyframes floatParticle {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.2; }
+  50% { transform: translateY(-40px) scale(1.5); opacity: 0.6; }
+}
+.cta-editorial-contact h2 {
+  color: var(--ivory);
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+.cta-editorial-contact p {
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 480px;
+  margin: 0 auto 32px;
+  font-size: 1.1rem;
+  position: relative;
+  z-index: 2;
+}
+.cta-editorial-contact .btn {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- Newsletter ---- */
+.newsletter {
+  background: var(--ivory-deep);
+  padding: 80px 0;
+  text-align: center;
+}
+.newsletter h2 {
+  margin-bottom: 8px;
+}
+.newsletter p {
+  color: var(--ink-soft);
+  margin-bottom: 32px;
+}
+.newsletter-form {
+  display: flex;
+  max-width: 460px;
+  margin: 0 auto;
+  border-bottom: 2px solid var(--ink);
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 14px 6px;
+  border: none;
+  background: transparent;
+  font-size: .95rem;
+}
+.newsletter-form input:focus {
+  outline: none;
+}
+.newsletter-form button {
+  padding: 14px 20px;
+  font-family: var(--ff-mono);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 600;
+  transition: opacity .3s;
+}
+.newsletter-form button:hover {
+  opacity: .7;
+}
+
+/* ---- Footer ---- */
+footer {
+      background: var(--ivory);
+      color: var(--ink);
+      padding: 64px 0 28px;
+    }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+  padding-left: 54px;
+  padding-right: 32px;
+}
+.footer-brand .logo { color: #000; display: inline-block;
+  margin-bottom: 14px;
+}
+.footer-brand p { color: #000; max-width: 280px;
+  font-size: .92rem;
+  line-height: 1.7;
+}
+.footer-social {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+.footer-social a { width: 38px; height: 38px; border: 1px solid #000; color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .3s var(--transition-smooth);
+}
+.footer-social a:hover {
+  background: var(--wine);
+  border-color: var(--wine);
+  transform: translateY(-2px);
+}
+    .footer-social i {
+      font-size: 16px;
+      color: #000;
+    }
+    .footer-social a:hover i {
+      color: var(--ivory);
+    }
+.footer-social svg {
+  width: 16px;
+  height: 16px;
+}
+.footer-col h5 {
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #FFD700;
+  margin-bottom: 16px;
+}
+.footer-col a { display:block; color: #000;
+  font-size: .9rem;
+  margin-bottom: 10px;
+  transition: color .3s ease;
+}
+.footer-col a:hover { color: #000; }
+.footer-bottom {
+      border-top: 1px solid #000;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #000;
+    padding-left: 54px;
+  padding-right: 32px;
+  font-size: .78rem;
+  color: rgba(255, 255, 255, 0.3);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+@media (max-width: 860px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    padding-left: 32px;
+  }
+  .footer-bottom {
+    padding-left: 32px;
+  }
+}
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Toast ---- */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background: var(--ink);
+  color: var(--ivory);
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  font-size: .88rem;
+  z-index: 300;
+  transform: translateY(120%);
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1), opacity .5s;
+  opacity: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.toast b {
+  color: var(--gold);
+}
+
+/* ---- Skip Link ---- */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--ivory);
+  padding: 10px 18px;
+  z-index: 999;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 980px) {
+  .contact-methods { padding: 60px 0; }
+  .advisors-section { padding: 60px 0; }
+  .studio-visit { padding: 60px 0; }
+  .map-section { padding: 60px 0; }
+  .support-journey { padding: 60px 0; }
+  .concierge-section { padding: 60px 0; }
+  .reviews-section { padding: 60px 0; }
+  .social-section { padding: 60px 0; }
+  .faq-section { padding: 60px 0; }
+  .cta-editorial-contact { padding: 80px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="preloader"><span><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></span></div>
+<div class="side-mark"><span>Stackly — Fashion Edit No.05</span></div>
+<div class="grain-overlay-contact"></div>
+
+<header class="navbar">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="account.html">Account</a>
+    </nav>
+    <div class="nav-actions">
+     
+      <a href="cart.html" class="icon-btn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><span class="cart-count">0</span></a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== 1. CONTACT HERO ===== -->
+  <section class="contact-hero">
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+    <div class="wrap">
+      <div class="contact-hero-content">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <span class="current">Contact</span>
+        </div>
+        <h1>
+          <span class="line"><span>Let's start</span></span>
+          <span class="line"><span>a conversation.</span></span>
+        </h1>
+        <p>We're here to help — whether you have a question, need styling advice, or want to explore our latest collection.</p>
+        <div class="hero-stats">
+          <div><b>24hr</b><span>Response Time</span></div>
+          <div><b>4.9★</b><span>Support Rating</span></div>
+          <div><b>100%</b><span>Satisfaction</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator-contact">
+      <div class="mouse"><div class="wheel"></div></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ===== 2. CONTACT METHODS ===== -->
+  <section class="contact-methods" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Contact Methods</p><h2>Reach out your way</h2></div>
+        <p>Multiple ways to connect — choose what works best for you.</p>
+      </div>
+      <div class="contact-methods-grid">
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="0">
+          <div class="glow"></div>
+          <span class="icon">✉️</span>
+          <h4>Email</h4>
+          <p>hello@stackly.in</p>
+        </div>
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="80">
+          <div class="glow"></div>
+          <span class="icon">📞</span>
+          <h4>Phone</h4>
+          <p>+91 00000 00000</p>
+        </div>
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="160">
+          <div class="glow"></div>
+          <span class="icon">📍</span>
+          <h4>Studio Address</h4>
+          <p>MMR Complex, Salem</p>
+        </div>
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="240">
+          <div class="glow"></div>
+          <span class="icon">💬</span>
+          <h4>Live Chat</h4>
+          <p>Available 10 AM – 7 PM IST</p>
+        </div>
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="320">
+          <div class="glow"></div>
+          <span class="icon">📱</span>
+          <h4>WhatsApp</h4>
+          <p>+91 63434 96454</p>
+        </div>
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="400">
+          <div class="glow"></div>
+          <span class="icon">🏢</span>
+          <h4>Business Enquiries</h4>
+          <p>business@stackly.in</p>
+        </div>
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="480">
+          <div class="glow"></div>
+          <span class="icon">📰</span>
+          <h4>Press &amp; Media</h4>
+          <p>press@stackly.in</p>
+        </div>
+        <div class="contact-method-card" data-aos="flip-up" data-aos-delay="560">
+          <div class="glow"></div>
+          <span class="icon">🤝</span>
+          <h4>Wholesale Partnership</h4>
+          <p>wholesale@stackly.in</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. CLIENT ADVISORS ===== -->
+  <section class="advisors-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Client Advisors</p><h2>Meet our team</h2></div>
+        <p>Expert advisors ready to help with styling, sizing, and more.</p>
+      </div>
+      <div class="advisors-grid">
+        <div class="advisor-card" data-aos="flip-up" data-aos-delay="0">
+          <div class="image">
+            <img src="./images/founder 11.webp" alt="Ananya Raghav">
+            <div class="status"><span class="dot"></span> Available Now</div>
+          </div>
+          <div class="info">
+            <h4>Ananya Raghav</h4>
+            <div class="title">Senior Style Advisor</div>
+            <div class="details">
+              <span>⭐ 5.0</span>
+              <span>⏱ 2hr response</span>
+              <span>🇬🇧 English</span>
+              <span>🇮🇳 Hindi</span>
+            </div>
+            <button class="btn btn-primary">Book a Consultation</button>
+          </div>
+        </div>
+        <div class="advisor-card" data-aos="flip-up" data-aos-delay="80">
+          <div class="image">
+            <img src="./images/founder 12.webp" alt="Karthik Subramaniam">
+            <div class="status"><span class="dot" style="background:#FFA500;"></span> Away</div>
+          </div>
+          <div class="info">
+            <h4>Karthik Subramaniam</h4>
+            <div class="title">Fashion Consultant</div>
+            <div class="details">
+              <span>⭐ 4.9</span>
+              <span>⏱ 4hr response</span>
+              <span>🇬🇧 English</span>
+              <span>🇮🇳 Tamil</span>
+            </div>
+            <button class="btn btn-outline">Book a Consultation</button>
+          </div>
+        </div>
+        <div class="advisor-card" data-aos="flip-up" data-aos-delay="160">
+          <div class="image">
+            <img src="./images/founder 13.webp" alt="Divya Menon">
+            <div class="status"><span class="dot"></span> Available Now</div>
+          </div>
+          <div class="info">
+            <h4>Divya Menon</h4>
+            <div class="title">Personal Shopper</div>
+            <div class="details">
+              <span>⭐ 5.0</span>
+              <span>⏱ 1hr response</span>
+              <span>🇬🇧 English</span>
+              <span>🇮🇳 Malayalam</span>
+            </div>
+            <button class="btn btn-primary">Book a Consultation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. STUDIO VISIT ===== -->
+  <section class="studio-visit" data-aos="fade-up">
+    <div class="wrap">
+      <div class="studio-visit-grid">
+        <div class="studio-image" data-aos="fade-right">
+          <img src="./images/workspace 6.webp" alt="Stackly Studio">
+          <div class="floating-card">
+            <b>Stackly Studio</b>
+            Salem, Tamil Nadu
+          </div>
+        </div>
+        <div class="studio-info" data-aos="fade-left">
+          <p class="eyebrow gold">Visit Us</p>
+          <h2>Experience the studio</h2>
+          <div class="feature">
+            <span class="icon">🕐</span>
+            <div>
+              <h4>Opening Hours</h4>
+              <p>Monday – Saturday, 10 AM – 7 PM IST</p>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="icon">📍</span>
+            <div>
+              <h4>Address</h4>
+              <p>MMR Complex, Salem, Tamil Nadu, India</p>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="icon">🚗</span>
+            <div>
+              <h4>Parking &amp; Transport</h4>
+              <p>Free parking available · 5 min from Salem Junction</p>
+            </div>
+          </div>
+          <div class="location-pins">
+            <span>📍 Landmark: Near City Center</span>
+            <span>🚉 Salem Junction - 2km</span>
+            <span>✈️ Coimbatore Airport - 90km</span>
+          </div>
+          <div style="margin-top:20px;">
+            <a href="404.html" class="btn btn-primary magnetic">Book an Appointment</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. INTERACTIVE WORLD MAP ===== -->
+  <section class="map-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Global Presence</p><h2>Where we ship</h2></div>
+        <p>From Salem to the world — serving customers across 15 countries.</p>
+      </div>
+      <div class="map-container">
+        <div class="map-placeholder">
+          <div class="location-marker">
+            <div class="dot"></div>
+            <div class="tooltip">Salem, India — Studio</div>
+          </div>
+          <div class="location-marker">
+            <div class="dot"></div>
+            <div class="tooltip">London, UK</div>
+          </div>
+          <div class="location-marker">
+            <div class="dot"></div>
+            <div class="tooltip">New York, USA</div>
+          </div>
+          <div class="location-marker">
+            <div class="dot"></div>
+            <div class="tooltip">Singapore</div>
+          </div>
+          <div class="location-marker">
+            <div class="dot"></div>
+            <div class="tooltip">Dubai, UAE</div>
+          </div>
+          <div class="location-marker">
+            <div class="dot"></div>
+            <div class="tooltip">Sydney, Australia</div>
+          </div>
+          <div class="connection-line"></div>
+          <div class="connection-line"></div>
+          <div class="connection-line"></div>
+        </div>
+      </div>
+      <div class="map-label">🌍 15 countries · 12,000+ customers · Worldwide shipping</div>
+    </div>
+  </section>
+
+  <!-- ===== 6. SUPPORT JOURNEY ===== -->
+  <section class="support-journey" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Support Journey</p><h2>How we help</h2></div>
+        <p>Every inquiry is handled with care from start to resolution.</p>
+      </div>
+      <div class="journey-timeline">
+        <div class="journey-step" data-aos="fade-up" data-aos-delay="0">
+          <span class="icon">📝</span>
+          <div class="step-number">1</div>
+          <h4>Submit Message</h4>
+          <p>Reach out via any channel</p>
+        </div>
+        <div class="journey-step" data-aos="fade-up" data-aos-delay="80">
+          <span class="icon">👤</span>
+          <div class="step-number">2</div>
+          <h4>Assigned to Advisor</h4>
+          <p>Matched with the right expert</p>
+        </div>
+        <div class="journey-step" data-aos="fade-up" data-aos-delay="160">
+          <span class="icon">🔍</span>
+          <div class="step-number">3</div>
+          <h4>Review Request</h4>
+          <p>Thorough understanding</p>
+        </div>
+        <div class="journey-step" data-aos="fade-up" data-aos-delay="240">
+          <span class="icon">💡</span>
+          <div class="step-number">4</div>
+          <h4>Personalized Response</h4>
+          <p>Tailored to your needs</p>
+        </div>
+        <div class="journey-step" data-aos="fade-up" data-aos-delay="320">
+          <span class="icon">✅</span>
+          <div class="step-number">5</div>
+          <h4>Resolution</h4>
+          <p>Problem solved, fully</p>
+        </div>
+        <div class="journey-step" data-aos="fade-up" data-aos-delay="400">
+          <span class="icon">🔄</span>
+          <div class="step-number">6</div>
+          <h4>Follow-up</h4>
+          <p>We check back to ensure</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. CONCIERGE SERVICES ===== -->
+  <section class="concierge-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Concierge Services</p><h2>Beyond fashion</h2></div>
+        <p>Premium services to elevate your experience.</p>
+      </div>
+      <div class="concierge-grid">
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="0">
+          <span class="icon">👗</span>
+          <h4>Personal Styling</h4>
+          <p>Curated looks just for you</p>
+        </div>
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="80">
+          <span class="icon">📐</span>
+          <h4>Size Consultation</h4>
+          <p>Perfect fit, every time</p>
+        </div>
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="160">
+          <span class="icon">🎁</span>
+          <h4>Gift Assistance</h4>
+          <p>Thoughtful gifts, wrapped</p>
+        </div>
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="240">
+          <span class="icon">🏢</span>
+          <h4>Corporate Orders</h4>
+          <p>Bulk orders for teams</p>
+        </div>
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="320">
+          <span class="icon">👑</span>
+          <h4>VIP Shopping</h4>
+          <p>Exclusive early access</p>
+        </div>
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="400">
+          <span class="icon">📅</span>
+          <h4>Private Appointments</h4>
+          <p>One-on-one sessions</p>
+        </div>
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="480">
+          <span class="icon">🎨</span>
+          <h4>Fashion Consultation</h4>
+          <p>Expert style advice</p>
+        </div>
+        <div class="concierge-card" data-aos="flip-up" data-aos-delay="560">
+          <span class="icon">✨</span>
+          <h4>Exclusive Preview</h4>
+          <p>First look at new edits</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. CUSTOMER REVIEWS ===== -->
+  <section class="reviews-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Reviews</p><h2>What our clients say</h2></div>
+      </div>
+      <div class="reviews-carousel">
+        <div class="review-card" data-aos="flip-up" data-aos-delay="0">
+          <span class="stars">★★★★★</span>
+          <q>The support team went above and beyond to help me find the perfect size. Truly exceptional service.</q>
+          <div class="author">
+            <img src="./images/founder 4.webp" alt="Sarah">
+            <div><div class="name">Sarah K.</div><div class="location">Mumbai, India</div></div>
+          </div>
+        </div>
+        <div class="review-card" data-aos="flip-up" data-aos-delay="80">
+          <span class="stars">★★★★★</span>
+          <q>My order arrived beautifully packaged and the quality exceeded expectations. Will definitely be ordering again.</q>
+          <div class="author">
+            <img src="./images/founder 5.webp" alt="James">
+            <div><div class="name">James W.</div><div class="location">London, UK</div></div>
+          </div>
+        </div>
+        <div class="review-card" data-aos="flip-up" data-aos-delay="160">
+          <span class="stars">★★★★★</span>
+          <q>The personal styling consultation was incredible. I've never felt more confident in my wardrobe choices.</q>
+          <div class="author">
+            <img src="./images/founder 6.webp" alt="Priya">
+            <div><div class="name">Priya S.</div><div class="location">Bengaluru, India</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 9. SOCIAL COMMUNITY ===== -->
+  <section class="social-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Community</p><h2>Join us online</h2></div>
+        <p>Connect with our growing fashion community.</p>
+      </div>
+      <div class="social-grid">
+        <div class="social-card" data-aos="flip-up" data-aos-delay="0">
+          <span class="icon">📸</span>
+          <h4>Instagram</h4>
+          <div class="followers">12.5K followers</div>
+          <a href="#" class="btn btn-outline">Follow →</a>
+        </div>
+        <div class="social-card" data-aos="flip-up" data-aos-delay="80">
+          <span class="icon">📌</span>
+          <h4>Pinterest</h4>
+          <div class="followers">4.2K followers</div>
+          <a href="#" class="btn btn-outline">Follow →</a>
+        </div>
+        <div class="social-card" data-aos="flip-up" data-aos-delay="160">
+          <span class="icon">🐦</span>
+          <h4>X (Twitter)</h4>
+          <div class="followers">2.8K followers</div>
+          <a href="#" class="btn btn-outline">Follow →</a>
+        </div>
+        <div class="social-card" data-aos="flip-up" data-aos-delay="240">
+          <span class="icon">🎵</span>
+          <h4>TikTok</h4>
+          <div class="followers">3.1K followers</div>
+          <a href="#" class="btn btn-outline">Follow →</a>
+        </div>
+        <div class="social-card" data-aos="flip-up" data-aos-delay="320">
+          <span class="icon">▶️</span>
+          <h4>YouTube</h4>
+          <div class="followers">1.5K subscribers</div>
+          <a href="#" class="btn btn-outline">Subscribe <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="social-card" data-aos="flip-up" data-aos-delay="400">
+          <span class="icon">💬</span>
+          <h4>Threads</h4>
+          <div class="followers">1.2K followers</div>
+          <a href="#" class="btn btn-outline">Follow →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 10. FAQ PREMIUM ===== -->
+  <section class="faq-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">FAQ</p><h2>Quick answers</h2></div>
+      </div>
+      <div class="faq-accordion">
+        <div class="faq-item open" data-aos="fade-up">
+          <button class="faq-q">How fast will I get a reply? <span class="plus">+</span></button>
+          <div class="faq-a">We aim to reply to every message within 24 hours on weekdays, often sooner. For urgent inquiries, please call our support line.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="60">
+          <button class="faq-q">Can I visit the studio in person? <span class="plus">+</span></button>
+          <div class="faq-a">Yes — drop by Mon–Sat, 10 AM–7 PM IST. We recommend booking an appointment ahead for fittings.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="120">
+          <button class="faq-q">Do you handle press or wholesale enquiries? <span class="plus">+</span></button>
+          <div class="faq-a">Absolutely — mention "Press" or "Wholesale" in your subject line and our team will route it accordingly.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="180">
+          <button class="faq-q">How can I book a styling consultation? <span class="plus">+</span></button>
+          <div class="faq-a">Simply click "Book a Consultation" on any advisor card above or email us to schedule a session.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 11. LIVE SUPPORT BAR ===== -->
+  <div class="live-support-bar" id="liveSupportBar">
+    <span class="live-dot"></span>
+    <div class="info">
+      <b>Live Support</b>
+      <span class="count"> · 2 advisors online · 12 chats today</span>
+    </div>
+    <button class="btn btn-primary" id="chatButton">Start Chat</button>
+  </div>
+
+  <!-- ===== 12. LUXURY CTA ===== -->
+  <section class="cta-editorial-contact" data-aos="fade-up">
+    <div class="particles">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="wrap">
+      <h2 data-aos="zoom-in">Ready to elevate<br>your wardrobe?</h2>
+      <p data-aos="fade-up">Book a personal styling session or explore our latest collection — we're here to help.</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="404.html" class="btn btn-gold btn-lg magnetic" data-aos="fade-up" data-aos-delay="200">Shop the Collection</a>
+        <a href="404.html" class="btn btn-white btn-lg magnetic" data-aos="fade-up" data-aos-delay="250">Book a Consultation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEWSLETTER ===== -->
+  <section class="newsletter" data-aos="fade-up">
+    <div class="wrap">
+      <h2>Get first access to new edits</h2>
+      <p>10% off your first order. No spam — just new arrivals and restock alerts.</p>
+      <form class="newsletter-form" data-demo-form="Subscribed — check your inbox for your code.">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe <i class="fa-solid fa-arrow-right"></i></button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></a>
+        <p>A fashion house for considered wardrobes, designed and shipped from Salem, Tamil Nadu.</p>
+        <div class="footer-social">
+          <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="404.html" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          <a href="404.html" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Shop</h5>
+        <a href="404.html">Outerwear</a><a href="404.html">Knitwear</a><a href="404.html">Denim</a><a href="404.html">Accessories</a>
+      </div>
+      <div class="footer-col"><h5>Company</h5>
+       <a href="index.html">Home</a> <a href="about.html">About</a><a href="contact.html">Contact</a><a href="account.html">Account</a><a href="cart.html">Bag</a>
+      </div>
+      <div class="footer-col"><h5>Visit</h5>
+        <a href="404.html">MMR Complex, Salem, Tamil Nadu</a><a href="404.html">+91 63800 00000</a><a href="mailto:hello@stackly.in">hello@stackly.in</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> Stackly. All rights reserved.</span>
+      <span>Designed in Salem, Tamil Nadu</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ---- AOS ----
+  if (window.AOS) {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 60
+    });
+  }
+
+  // ---- PRELOADER ----
+  var preloader = document.querySelector('.preloader');
+  if (preloader) {
+    setTimeout(function() { preloader.classList.add('hide'); }, 800);
+  }
+
+  // ---- YEAR ----
+  document.querySelectorAll('.year').forEach(function(el) {
+    el.textContent = new Date().getFullYear();
+  });
+
+  // ---- NAVBAR ----
+  var navbar = document.querySelector('.navbar');
+  if (navbar) {
+    window.addEventListener('scroll', function() {
+      navbar.classList.toggle('scrolled', window.scrollY > 30);
+    });
+  }
+
+  // ---- HAMBURGER ----
+  var burger = document.querySelector('.hamburger');
+  var navLinks = document.querySelector('.nav-links');
+  if (burger && navLinks) {
+    burger.addEventListener('click', function() {
+      burger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        burger.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+  }
+
+  // ---- MAGNETIC BUTTONS ----
+  document.querySelectorAll('.magnetic').forEach(function(el) {
+    el.addEventListener('mousemove', function(e) {
+      var rect = this.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      this.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.4) + 'px)';
+    });
+    el.addEventListener('mouseleave', function() {
+      this.style.transform = 'translate(0, 0)';
+    });
+  });
+
+  // ---- TOAST ----
+  var toastEl = document.querySelector('.toast');
+  if (!toastEl) {
+    toastEl = document.createElement('div');
+    toastEl.className = 'toast';
+    document.body.appendChild(toastEl);
+  }
+
+  window.showToast = function(message) {
+    toastEl.innerHTML = message;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._timer);
+    toastEl._timer = setTimeout(function() {
+      toastEl.classList.remove('show');
+    }, 2600);
+  };
+
+  // ---- CART ----
+  var CART_KEY = 'stackly_cart';
+
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
+  }
+
+  function setCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCount();
+  }
+
+  function updateCartCount() {
+    var cart = getCart();
+    var total = cart.reduce(function(sum, item) { return sum + (item.qty || 1); }, 0);
+    document.querySelectorAll('.cart-count').forEach(function(el) {
+      el.textContent = total;
+    });
+  }
+  updateCartCount();
+
+  window.stacklyCart = {
+    add: function(item) {
+      var cart = getCart();
+      var existing = cart.find(function(i) { return i.id === item.id && i.size === (item.size || 'M'); });
+      if (existing) {
+        existing.qty = (existing.qty || 1) + (item.qty || 1);
+      } else {
+        cart.push({ id: item.id, name: item.name, price: item.price, img: item.img, size: item.size || 'M', qty: item.qty || 1 });
+      }
+      setCart(cart);
+      window.showToast('<b>Added</b> — ' + item.name + ' is in your bag');
+    }
+  };
+
+  document.querySelectorAll('[data-add-cart]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      window.stacklyCart.add({
+        id: this.dataset.id,
+        name: this.dataset.name,
+        price: parseFloat(this.dataset.price),
+        img: this.dataset.img,
+        size: this.dataset.size || 'M'
+      });
+    });
+  });
+
+  // ---- FAQ ACCORDION ----
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var wasOpen = item.classList.contains('open');
+      var parent = item.parentElement;
+      if (parent) {
+        parent.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      }
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // ---- CHAT BUTTON ----
+  document.getElementById('chatButton')?.addEventListener('click', function() {
+    window.showToast('💬 Chat started — an advisor will be with you shortly.');
+  });
+
+  // ---- NEWSLETTER FORM ----
+  document.querySelectorAll('[data-demo-form]').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (this.classList.contains('newsletter-form')) {
+        const emailInput = this.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value.trim() !== '') {
+          window.location.href = '404.html';
+        } else {
+          window.showToast('Please enter a valid email address.');
+        }
+      } else {
+        window.showToast(this.dataset.demoForm || 'Submitted - thank you!');
+        this.reset();
+      }
+    });
+  });
+
+  // ---- CONTACT METHOD GLOW FOLLOW ----
+  document.querySelectorAll('.contact-method-card').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = this.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width) * 100;
+      var y = ((e.clientY - rect.top) / rect.height) * 100;
+      var glow = this.querySelector('.glow');
+      if (glow) {
+        glow.style.setProperty('--x', x + '%');
+        glow.style.setProperty('--y', y + '%');
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

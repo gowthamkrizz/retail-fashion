@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — Stackly</title>
+  <meta name="description" content="Stackly Membership — Exclusive fashion access, personalized styling, and VIP rewards.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <style>
+    /* ===========================================================
+       ACCOUNT PAGE — Premium Styles
+    =========================================================== */
+    :root {
+      --ivory: #F5F1E8;
+      --ivory-deep: #ECE5D6;
+      --ink: #1E1B18;
+      --ink-soft: #4A413C;
+      --wine: #6E2A3A;
+      --wine-deep: #4F1D29;
+      --gold: #B9A28C;
+      --gold-light: #D4C5B8;
+      --sage: #7C8C6B;
+      --line: rgba(30,27,24,0.1);
+      --glass-bg: rgba(245,241,234,0.75);
+      --glass-border: rgba(255,255,255,0.3);
+      --shadow-soft: 0 20px 60px rgba(30,27,24,0.06);
+      --shadow-medium: 0 30px 80px rgba(30,27,24,0.08);
+      --shadow-large: 0 40px 100px rgba(30,27,24,0.12);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+      --ff-display: 'Fraunces', serif;
+      --ff-body: 'Inter', sans-serif;
+      --ff-mono: 'JetBrains Mono', monospace;
+      --ff-script: 'Playfair Display', serif;
+      --maxw: 1440px;
+      --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--ff-body);
+      background: var(--ivory);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input, select, textarea { font-family: inherit; font-size: 1rem; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
+    @media (max-width: 768px) { .wrap { padding: 0 20px; } }
+
+    h1, h2, h3, h4 {
+      font-family: var(--ff-display);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    h1 { font-size: clamp(2.8rem, 5vw, 5.2rem); }
+    h2 { font-size: clamp(2rem, 3.4vw, 3.2rem); }
+    h3 { font-size: clamp(1.3rem, 2vw, 1.8rem); }
+
+    .eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--wine);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .eyebrow::before { content: ''; width: 28px; height: 1.5px; background: var(--wine); }
+    .eyebrow.gold { color: var(--gold); }
+    .eyebrow.gold::before { background: var(--gold); }
+    .eyebrow.light { color: rgba(255,255,255,0.6); }
+    .eyebrow.light::before { background: rgba(255,255,255,0.4); }
+
+    /* ===== PRELOADER ===== */
+    .preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--ivory);
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+    .preloader-inner { text-align: center; }
+    .preloader-inner .logo {
+      font-family: var(--ff-display);
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .preloader-inner .logo em { font-style: italic; color: var(--wine); }
+    .preloader-inner .bar {
+      width: 120px; height: 2px; background: var(--line);
+      margin: 16px auto 0; border-radius: 2px; overflow: hidden;
+    }
+    .preloader-inner .bar span {
+      display: block; height: 100%; width: 0;
+      background: var(--wine);
+      animation: loadBar 1.2s ease forwards;
+    }
+    @keyframes loadBar { 0% { width: 0; } 100% { width: 100%; } }
+
+    /* ===== SKIP LINK ===== */
+    .skip-link {
+      position: absolute; left: -9999px; top: 0;
+      background: var(--ink); color: var(--ivory); padding: 12px 24px; z-index: 999;
+    }
+    .skip-link:focus { left: 16px; top: 16px; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 0; background: transparent;
+      transition: padding 0.4s var(--transition-smooth), background 0.4s var(--transition-smooth);
+    }
+    .navbar.scrolled {
+      padding: 12px 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .logo {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .logo em { font-style: normal; color: var(--wine); }
+    .nav-links {
+      display: flex; gap: 36px; align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase;
+      font-weight: 500; position: relative; padding: 4px 0;
+      color: var(--ink-soft); transition: color 0.3s ease;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: -2px;
+      width: 0; height: 1.5px; background: var(--wine);
+      transition: width 0.4s var(--transition-smooth);
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-links a.active { color: var(--wine); }
+    .nav-actions {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .icon-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--line); background: transparent; color: var(--ink);
+      transition: all 0.3s var(--transition-smooth); position: relative;
+    }
+    .icon-btn:hover {
+      background: var(--ink); border-color: var(--ink); color: var(--ivory);
+      transform: translateY(-2px);
+    }
+    .icon-btn svg { width: 18px; height: 18px; }
+    .cart-count {
+      position: absolute; top: -4px; right: -4px;
+      background: var(--wine); color: var(--ivory);
+      font-family: var(--ff-mono); font-size: 0.6rem; font-weight: 600;
+      width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; padding: 4px;
+      background: none; border: none; cursor: pointer;
+     position: relative; z-index: 2000; }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px; background: var(--ink);
+      transition: all 0.3s var(--transition-smooth);
+    }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+    @media (max-width: 980px) {
+      .nav-links {
+        position: fixed; top: 0; right: -100%; height: 100vh;
+        width: min(340px, 80vw); background: var(--ivory);
+        flex-direction: column; justify-content: center; align-items: flex-start;
+        padding: 40px 44px; gap: 24px;
+        transition: right 0.5s var(--transition-smooth);
+        box-shadow: var(--shadow-large);
+      }
+      .nav-links.open { right: 0; }
+      .nav-links a { font-size: 1.2rem; }
+      .hamburger { display: flex;  position: relative; z-index: 2000; }
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px 36px; font-size: 0.78rem; letter-spacing: 0.1em;
+      text-transform: uppercase; font-weight: 600;
+      border-radius: var(--radius-sm); transition: all 0.4s var(--transition-smooth);
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .btn-primary { background: var(--ink); color: var(--ivory); }
+    .btn-primary:hover { background: var(--wine); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(110,42,58,0.25); }
+    .btn-outline { border: 1.5px solid var(--ink); color: var(--ink); background: transparent; }
+    .btn-outline:hover { background: var(--ink); color: var(--ivory); transform: translateY(-2px); }
+    .btn-gold { background: var(--gold); color: var(--ink); }
+    .btn-gold:hover { background: var(--wine); color: var(--ivory); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(110,42,58,0.25); }
+    .btn-white { background: var(--ivory); color: var(--ink); }
+    .btn-white:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-block { width: 100%; justify-content: center; }
+    .btn-sm { padding: 10px 24px; font-size: 0.7rem; }
+    .btn-lg { padding: 20px 48px; font-size: 0.85rem; }
+    .magnetic { transition: transform 0.15s ease; }
+
+    /* ============================================================
+       SECTION HEAD
+    ============================================================ */
+    .section-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: 30px; margin-bottom: 50px;
+    }
+    .section-head h2 { margin-top: 4px; }
+    .section-head p { color: var(--ink-soft); max-width: 400px; }
+    @media (max-width: 768px) {
+      .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    /* ============================================================
+       ACCOUNT HERO
+    ============================================================ */
+    .account-hero {
+      padding: 160px 0 60px;
+      background: linear-gradient(175deg, var(--ivory) 0%, var(--ivory-deep) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .account-hero .bg-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236E2A3A' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-size: 60px 60px;
+    }
+    .account-hero .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+    .account-hero .hero-content h1 {
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      margin-bottom: 16px;
+    }
+    .account-hero .hero-content h1 .highlight {
+      color: var(--wine);
+      position: relative;
+    }
+    .account-hero .hero-content h1 .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gold);
+      opacity: 0.3;
+      border-radius: 2px;
+    }
+    .account-hero .hero-content p {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+    .account-hero .hero-stats {
+      display: flex;
+      gap: 48px;
+    }
+    .account-hero .hero-stats div b {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      display: block;
+    }
+    .account-hero .hero-stats div span {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+    }
+    @media (max-width: 768px) {
+      .account-hero { padding: 140px 0 40px; }
+      .account-hero .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .account-hero .hero-stats div b { font-size: 1.4rem; }
+    }
+
+    /* ============================================================
+       ACCOUNT TOGGLE
+    ============================================================ */
+    .account-toggle-wrap {
+      padding: 60px 0 40px;
+      background: var(--ivory);
+    }
+    .account-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      max-width: 400px;
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .account-toggle button {
+      flex: 1;
+      padding: 16px 30px;
+      font-family: var(--ff-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: transparent;
+      color: var(--ink-soft);
+      transition: all 0.4s var(--transition-smooth);
+      border: none;
+    }
+    .account-toggle button.active {
+      background: var(--ink);
+      color: var(--ivory);
+    }
+    .account-toggle button:hover:not(.active) {
+      background: var(--ivory-deep);
+    }
+
+    /* ============================================================
+       AUTH CARDS
+    ============================================================ */
+    .auth-section {
+      padding: 0 0 80px;
+      background: var(--ivory);
+    }
+    .auth-card {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 48px;
+      background: #fff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+    .auth-card h2 {
+      margin-bottom: 6px;
+    }
+    .auth-card .sub {
+      color: var(--ink-soft);
+      margin-bottom: 28px;
+      font-size: 0.92rem;
+    }
+    .auth-card .field {
+      margin-bottom: 18px;
+    }
+    .auth-card .field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+    .auth-card .field input,
+    .auth-card .field select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--ivory);
+      font-size: 0.95rem;
+      transition: border-color 0.3s;
+    }
+    .auth-card .field input:focus,
+    .auth-card .field select:focus {
+      outline: none;
+      border-color: var(--wine);
+    }
+    .auth-card .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .auth-card .form-row .field {
+      margin-bottom: 0;
+    }
+    .auth-card .btn {
+      width: 100%;
+      margin-top: 8px;
+    }
+    .auth-switch {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+    }
+    .auth-switch a {
+      color: var(--wine);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .auth-switch a:hover {
+      text-decoration: underline;
+    }
+    /* forgot password link */
+    .forgot-link {
+      display: block;
+      text-align: right;
+      font-size: 0.8rem;
+      margin-top: 4px;
+      color: var(--wine);
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .forgot-link:hover {
+      text-decoration: underline;
+      color: var(--wine-deep);
+    }
+    .role-toggle {
+      display: flex;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .role-toggle .role-opt {
+      flex: 1;
+      padding: 10px;
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      background: transparent;
+      transition: all 0.3s;
+      border: none;
+    }
+    .role-toggle .role-opt.active {
+      background: var(--wine);
+      color: var(--ivory);
+    }
+    .role-toggle .role-opt:hover:not(.active) {
+      background: var(--ivory-deep);
+    }
+    @media (max-width: 480px) {
+      .auth-card { padding: 32px 24px; }
+      .auth-card .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       DASHBOARD PREVIEW
+    ============================================================ */
+    .dashboard-preview {
+      padding: 80px 0;
+      background: var(--ivory-deep);
+    }
+    .dash-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .dash-card {
+      padding: 28px 24px;
+      background: #fff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      text-align: center;
+      transition: all 0.5s var(--transition-smooth);
+    }
+    .dash-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+      border-color: var(--gold);
+    }
+    .dash-card .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .dash-card .stat {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      color: var(--wine);
+      display: block;
+    }
+    .dash-card .label { font-size: 0.82rem; color: var(--ink-soft); }
+    @media (max-width: 980px) {
+      .dash-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .dash-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       BENEFITS
+    ============================================================ */
+    .benefits-account {
+      padding: 80px 0;
+      background: var(--ivory);
+    }
+    .benefits-grid-account {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .benefit-card-account {
+      padding: 28px 20px;
+      background: #fff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      text-align: center;
+      transition: all 0.5s var(--transition-smooth);
+    }
+    .benefit-card-account:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+      border-color: var(--gold);
+    }
+    .benefit-card-account .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .benefit-card-account h4 { font-family: var(--ff-body); font-size: 0.9rem; font-weight: 600; }
+    .benefit-card-account p { font-size: 0.78rem; color: var(--ink-soft); }
+    @media (max-width: 980px) {
+      .benefits-grid-account { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .benefits-grid-account { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       ORDER HISTORY
+    ============================================================ */
+    .orders-section {
+      padding: 80px 0;
+      background: var(--ivory-deep);
+    }
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      background: #fff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      margin-bottom: 12px;
+      transition: all 0.3s var(--transition-smooth);
+    }
+    .order-item:hover {
+      transform: translateX(4px);
+      border-color: var(--gold);
+    }
+    .order-item .info .order-id {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      color: var(--ink-soft);
+    }
+    .order-item .info h4 { font-family: var(--ff-body); font-size: 0.95rem; font-weight: 600; }
+    .order-item .status {
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .order-item .status.delivered { background: rgba(124,140,107,0.15); color: var(--sage); }
+    .order-item .status.shipped { background: rgba(185,162,140,0.15); color: var(--gold); }
+    .order-item .status.processing { background: rgba(110,42,58,0.12); color: var(--wine); }
+    .order-item .amount {
+      font-family: var(--ff-mono);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    @media (max-width: 640px) {
+      .order-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    /* ============================================================
+       WISHLIST PREVIEW
+    ============================================================ */
+    .wishlist-section {
+      padding: 80px 0;
+      background: var(--ivory);
+    }
+    .wishlist-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .wishlist-item {
+      background: #fff;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      transition: all 0.5s var(--transition-smooth);
+    }
+    .wishlist-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+      border-color: var(--gold);
+    }
+    .wishlist-item img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+    .wishlist-item .info { padding: 12px 16px; }
+    .wishlist-item .info h4 { font-family: var(--ff-body); font-size: 0.85rem; font-weight: 600; }
+    .wishlist-item .info .price { font-family: var(--ff-mono); font-size: 0.78rem; color: var(--wine); }
+    @media (max-width: 980px) {
+      .wishlist-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .wishlist-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       SUPPORT
+    ============================================================ */
+    .support-section {
+      padding: 80px 0;
+      background: var(--ivory-deep);
+    }
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .support-card {
+      padding: 32px 24px;
+      background: #fff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      text-align: center;
+      transition: all 0.5s var(--transition-smooth);
+    }
+    .support-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+      border-color: var(--gold);
+    }
+    .support-card .icon { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+    .support-card h4 { font-family: var(--ff-body); font-size: 0.95rem; font-weight: 600; }
+    .support-card p { font-size: 0.85rem; color: var(--ink-soft); }
+    @media (max-width: 768px) {
+      .support-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       FAQ
+    ============================================================ */
+    .faq-account {
+      padding: 80px 0;
+      background: var(--ivory);
+    }
+    .faq-accordion {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .faq-accordion .faq-item {
+      border-bottom: 1px solid var(--line);
+      transition: all 0.5s;
+    }
+    .faq-accordion .faq-item:last-child { border-bottom: none; }
+    .faq-accordion .faq-item:hover { background: rgba(255,255,255,0.3); }
+    .faq-accordion .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      text-align: left;
+      font-family: var(--ff-display);
+      font-size: 1.08rem;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    .faq-accordion .faq-q:hover { color: var(--wine); }
+    .faq-accordion .faq-q .plus {
+      font-family: var(--ff-mono);
+      font-size: 1.2rem;
+      color: var(--wine);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      margin-left: 20px;
+    }
+    .faq-accordion .faq-item.open .faq-q .plus { transform: rotate(45deg); }
+    .faq-accordion .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s var(--transition-smooth);
+      color: var(--ink-soft);
+      font-size: 0.94rem;
+    }
+    .faq-accordion .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-bottom: 22px;
+    }
+
+    /* ============================================================
+       CTA BANNER
+    ============================================================ */
+    .cta-banner-account {
+      padding: 80px 0;
+      background: var(--wine);
+      color: var(--ivory);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner-account::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.05), transparent 60%);
+    }
+    .cta-banner-account h2 { color: var(--ivory); margin-bottom: 12px; }
+    .cta-banner-account p { color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto 28px; }
+    .cta-banner-account .btn { position: relative; z-index: 2; }
+
+    /* ============================================================
+       SIDE MARK
+    ============================================================ */
+    .side-mark {
+      position: fixed; left: 0; top: 0; height: 100vh; width: 54px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 60; pointer-events: none; mix-blend-mode: difference;
+    }
+    .side-mark span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--ff-mono);
+      font-size: .68rem; letter-spacing: .35em; text-transform: uppercase;
+      color: var(--ivory);
+    }
+    @media (max-width: 860px) { .side-mark { display: none; } }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+          background: var(--ivory);
+          color: var(--ink);
+          padding: 64px 0 28px;
+        }
+    .footer-bottom {
+          border-top: 1px solid #000;
+          padding-top: 24px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #000;
+        font-size: 0.78rem;
+      color: var(--ink-soft);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    @media (max-width: 480px) { .footer-bottom { flex-direction: column; text-align: center; } }
+
+    /* ============================================================
+       GRAIN OVERLAY
+    ============================================================ */
+    .grain-overlay-account {
+      position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+      opacity: 0.012;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ============================================================
+       SCROLL PROGRESS
+    ============================================================ */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: var(--wine); z-index: 101;
+      width: 0%; transition: width 0.1s ease;
+    }
+
+    /* ============================================================
+       TOAST
+    ============================================================ */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px; z-index: 300;
+      background: var(--ink); color: var(--ivory);
+      padding: 16px 28px; border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      transform: translateY(120%);
+      transition: transform 0.5s var(--transition-smooth), opacity 0.5s;
+      opacity: 0; box-shadow: var(--shadow-large);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast b { color: var(--gold); }
+
+    /* ============================================================
+       CURSOR GLOW
+    ============================================================ */
+    .cursor-glow {
+      position: fixed;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(185,162,140,0.12), rgba(185,162,140,0.01) 70%);
+      pointer-events: none; z-index: 1;
+      mix-blend-mode: multiply;
+      transform: translate(-50%, -50%);
+      opacity: 0; transition: opacity 0.4s ease;
+      will-change: transform;
+    }
+    .cursor-glow.active { opacity: 1; }
+    @media (pointer: coarse) { .cursor-glow { display: none; } }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) { .section { padding: 60px 0; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- ===== PRELOADER ===== -->
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <div class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></div>
+    <div class="bar"><span></span></div>
+  </div>
+</div>
+
+<!-- ===== GRAIN OVERLAY ===== -->
+<div class="grain-overlay-account"></div>
+
+<!-- ===== CURSOR GLOW ===== -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ===== SCROLL PROGRESS ===== -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ===== SKIP LINK ===== -->
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ===== SIDE MARK ===== -->
+<div class="side-mark"><span>Stackly — Fashion Edit No.05</span></div>
+
+<!-- ===== NAVBAR ===== -->
+<header class="navbar" id="navbar">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><img src="stackly logo.webp" alt="Stackly Logo" style="height: 35px; width: auto; display: inline-block; vertical-align: middle;"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="account.html" class="active">Account</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="account.html" class="icon-btn" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      </a>
+      <a href="cart.html" class="icon-btn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+        <span class="cart-count">0</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== ACCOUNT HERO ===== -->
+  <section class="account-hero" data-aos="fade-up">
+    <div class="bg-pattern"></div>
+    <div class="wrap">
+      <div class="hero-content">
+        <p class="eyebrow">Welcome to Stackly</p>
+        <h1>Your <span class="highlight">membership</span> experience</h1>
+        <p>Manage your orders, wishlist, and profile — all in one place. Enjoy exclusive access to new collections and personalized fashion recommendations.</p>
+        <div class="hero-stats">
+          <div><b>12</b><span>Wishlist Items</span></div>
+          <div><b>3</b><span>Active Orders</span></div>
+          <div><b>4.8★</b><span>Member Rating</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACCOUNT TOGGLE ===== -->
+  <section class="account-toggle-wrap" data-aos="fade-up">
+    <div class="wrap">
+      <div class="account-toggle">
+        <button class="active" data-auth="login">Sign In</button>
+        <button data-auth="signup">Create Account</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AUTH SECTION ===== -->
+  <section class="auth-section" id="authSection">
+    <div class="wrap">
+      <!-- Login Card -->
+      <div class="auth-card" id="loginCard">
+        <h2>Welcome back</h2>
+        <p class="sub">Sign in to track orders, manage your wishlist, and check out faster.</p>
+        <form data-demo-form="Signed in — redirecting to your dashboard." id="loginForm">
+          <div class="field">
+            <label>Login As</label>
+            <div class="role-toggle" data-role-group="login">
+              <button type="button" class="role-opt active" data-role="user">User</button>
+              <button type="button" class="role-opt" data-role="admin">Admin</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" placeholder="hello@stackly.in" required>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••" required>
+          </div>
+          <!-- forgot password link -->
+          <a href="404.html" class="forgot-link">Forgot password?</a>
+          <button type="submit" class="btn btn-primary btn-block magnetic">Sign In</button>
+        </form>
+        <p class="auth-switch">New to Stackly? <a data-auth="signup">Create an account</a></p>
+      </div>
+
+      <!-- Signup Card -->
+      <div class="auth-card" id="signupCard" style="display:none;">
+        <h2>Join Stackly</h2>
+        <p class="sub">Create an account to save your details and get early access to new edits.</p>
+        <form data-demo-form="Account created — welcome to Stackly." id="signupForm">
+          <div class="field">
+            <label>Account Type</label>
+            <div class="role-toggle" data-role-group="signup">
+              <button type="button" class="role-opt active" data-role="user">User</button>
+              <button type="button" class="role-opt" data-role="admin">Admin</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>First Name</label>
+              <input type="text" placeholder="Ananya" required>
+            </div>
+            <div class="field">
+              <label>Last Name</label>
+              <input type="text" placeholder="Raghav" required>
+            </div>
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" placeholder="hello@stackly.in" required>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" placeholder="Create a strong password" required>
+          </div>
+          <!-- optional: also a forgot link for signup? but we keep only login -->
+          <button type="submit" class="btn btn-primary btn-block magnetic">Create Account</button>
+        </form>
+        <p class="auth-switch">Already have an account? <a data-auth="login">Sign in</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD PREVIEW ===== -->
+  <section class="dashboard-preview" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Dashboard</p><h2>Your account at a glance</h2></div>
+        <p>Track everything in one place.</p>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-card" data-aos="flip-up" data-aos-delay="0">
+          <span class="icon">🛍️</span>
+          <span class="stat">12</span>
+          <div class="label">Wishlist Items</div>
+        </div>
+        <div class="dash-card" data-aos="flip-up" data-aos-delay="80">
+          <span class="icon">📦</span>
+          <span class="stat">3</span>
+          <div class="label">Active Orders</div>
+        </div>
+        <div class="dash-card" data-aos="flip-up" data-aos-delay="160">
+          <span class="icon">⭐</span>
+          <span class="stat">2,450</span>
+          <div class="label">Reward Points</div>
+        </div>
+        <div class="dash-card" data-aos="flip-up" data-aos-delay="240">
+          <span class="icon">🎯</span>
+          <span class="stat">4.8★</span>
+          <div class="label">Member Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MEMBER BENEFITS ===== -->
+  <section class="benefits-account" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Benefits</p><h2>Exclusive member perks</h2></div>
+        <p>Unlock premium privileges.</p>
+      </div>
+      <div class="benefits-grid-account">
+        <div class="benefit-card-account" data-aos="flip-up" data-aos-delay="0">
+          <span class="icon">🔒</span>
+          <h4>Early Collection Access</h4>
+          <p>Shop new edits 48 hours early</p>
+        </div>
+        <div class="benefit-card-account" data-aos="flip-up" data-aos-delay="80">
+          <span class="icon">💰</span>
+          <h4>VIP Discounts</h4>
+          <p>Exclusive member pricing</p>
+        </div>
+        <div class="benefit-card-account" data-aos="flip-up" data-aos-delay="160">
+          <span class="icon">📦</span>
+          <h4>Free Express Shipping</h4>
+          <p>Priority delivery on all orders</p>
+        </div>
+        <div class="benefit-card-account" data-aos="flip-up" data-aos-delay="240">
+          <span class="icon">👗</span>
+          <h4>Private Styling</h4>
+          <p>One-on-one expert sessions</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ORDER HISTORY ===== -->
+  <section class="orders-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Orders</p><h2>Recent orders</h2></div>
+        <a href="404.html" class="btn btn-outline magnetic">View All</a>
+      </div>
+      <div class="order-item" data-aos="fade-up" data-aos-delay="0">
+        <div class="info">
+          <span class="order-id">#STK-2024-0142</span>
+          <h4>Tailored Wool Coat</h4>
+          <span style="font-size:0.82rem; color:var(--ink-soft);">Ordered: Dec 12, 2024</span>
+        </div>
+        <span class="status delivered">Delivered</span>
+        <span class="amount">$148.00</span>
+      </div>
+      <div class="order-item" data-aos="fade-up" data-aos-delay="80">
+        <div class="info">
+          <span class="order-id">#STK-2024-0138</span>
+          <h4>Ribbed Knit Sweater</h4>
+          <span style="font-size:0.82rem; color:var(--ink-soft);">Ordered: Dec 8, 2024</span>
+        </div>
+        <span class="status shipped">Shipped</span>
+        <span class="amount">$68.00</span>
+      </div>
+      <div class="order-item" data-aos="fade-up" data-aos-delay="160">
+        <div class="info">
+          <span class="order-id">#STK-2024-0129</span>
+          <h4>Leather Crossbody Bag</h4>
+          <span style="font-size:0.82rem; color:var(--ink-soft);">Ordered: Dec 1, 2024</span>
+        </div>
+        <span class="status processing">Processing</span>
+        <span class="amount">$96.00</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WISHLIST ===== -->
+  <section class="wishlist-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Wishlist</p><h2>Your saved pieces</h2></div>
+        <a href="404.html" class="btn btn-outline magnetic">View All</a>
+      </div>
+      <div class="wishlist-grid">
+        <div class="wishlist-item" data-aos="flip-up" data-aos-delay="0">
+          <img src="./images/Tailored Wool Coat.webp" alt="Product">
+          <div class="info"><h4>Wool Coat</h4><div class="price">$148</div></div>
+        </div>
+        <div class="wishlist-item" data-aos="flip-up" data-aos-delay="80">
+          <img src="./images/Autumn Collection.webp" alt="Product">
+          <div class="info"><h4>Knit Sweater</h4><div class="price">$68</div></div>
+        </div>
+        <div class="wishlist-item" data-aos="flip-up" data-aos-delay="160">
+          <img src="./images/Leather Crossbody Bag.webp" alt="Product">
+          <div class="info"><h4>Crossbody Bag</h4><div class="price">$96</div></div>
+        </div>
+        <div class="wishlist-item" data-aos="flip-up" data-aos-delay="240">
+          <img src="./images/Cashmere Scarf.webp" alt="Product">
+          <div class="info"><h4>Cashmere Scarf</h4><div class="price">$42</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SUPPORT ===== -->
+  <section class="support-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">Support</p><h2>We're here to help</h2></div>
+      </div>
+      <div class="support-grid">
+        <div class="support-card" data-aos="flip-up" data-aos-delay="0">
+          <span class="icon">📞</span>
+          <h4>Call Us</h4>
+          <p>+91 63800 00000<br>Mon–Sat, 10–7 IST</p>
+        </div>
+        <div class="support-card" data-aos="flip-up" data-aos-delay="80">
+          <span class="icon">✉️</span>
+          <h4>Email Us</h4>
+          <p>hello@stackly.in<br>Replies within 24 hours</p>
+        </div>
+        <div class="support-card" data-aos="flip-up" data-aos-delay="160">
+          <span class="icon">📍</span>
+          <h4>Visit the Studio</h4>
+          <p>MMR Complex, Salem<br>Tamil Nadu, India</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-account" data-aos="fade-up">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow gold">FAQ</p><h2>Account questions</h2></div>
+      </div>
+      <div class="faq-accordion">
+        <div class="faq-item open" data-aos="fade-up">
+          <button class="faq-q">How do I reset my password? <span class="plus">+</span></button>
+          <div class="faq-a">Use the "Forgot password" link on the sign-in form to receive a reset email. Follow the instructions in the email to create a new password.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="60">
+          <button class="faq-q">Can I have multiple saved addresses? <span class="plus">+</span></button>
+          <div class="faq-a">Yes — add and manage multiple shipping addresses from the Addresses tab in your account dashboard. You can set a default address for faster checkout.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="120">
+          <button class="faq-q">How do I track my orders? <span class="plus">+</span></button>
+          <div class="faq-a">You can track all your orders from the Orders section of your account. Each order includes a tracking number and real-time shipping status.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="180">
+          <button class="faq-q">Can I update my email address? <span class="plus">+</span></button>
+          <div class="faq-a">Yes — visit the Profile Settings section in your account to update your email address, phone number, and other personal details.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BANNER ===== -->
+  <section class="cta-banner-account" data-aos="fade-up">
+    <div class="wrap">
+      <h2>New here?</h2>
+      <p>Create an account to track orders, save favorites, and check out faster next time.</p>
+      <a href="404.html" data-auth="signup" class="btn btn-gold magnetic">Create an Account</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> Stackly. All rights reserved.</span>
+      <span>Designed in Salem, Tamil Nadu</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ---- PRELOADER ----
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    setTimeout(() => preloader.classList.add('hide'), 1400);
+  }
+
+  // ---- AOS ----
+  if (window.AOS) {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 60
+    });
+  }
+
+  // ---- YEAR ----
+  document.querySelectorAll('.year').forEach(el => {
+    el.textContent = new Date().getFullYear();
+  });
+
+  // ---- NAVBAR SCROLL ----
+  const navbar = document.getElementById('navbar');
+  const scrollProgress = document.getElementById('scrollProgress');
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (navbar) {
+      navbar.classList.toggle('scrolled', scrollY > 30);
+    }
+    if (scrollProgress) {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+      scrollProgress.style.width = progress + '%';
+    }
+  });
+
+  // ---- HAMBURGER ----
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+  }
+
+  // ---- MAGNETIC BUTTONS ----
+  document.querySelectorAll('.magnetic').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const strength = 0.25;
+      el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'translate(0, 0)';
+    });
+  });
+
+  // ---- CURSOR GLOW ----
+  const glow = document.getElementById('cursorGlow');
+  let glowActive = false;
+
+  if (glow) {
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+      if (!glowActive) {
+        glow.classList.add('active');
+        glowActive = true;
+      }
+    });
+    document.addEventListener('mouseleave', () => {
+      glow.classList.remove('active');
+      glowActive = false;
+    });
+  }
+
+  // ---- TOAST ----
+  const toastEl = document.getElementById('toast');
+  window.showToast = function(message) {
+    if (!toastEl) return;
+    toastEl.innerHTML = message;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._timer);
+    toastEl._timer = setTimeout(() => {
+      toastEl.classList.remove('show');
+    }, 2600);
+  };
+
+  // ---- CART ----
+  const CART_KEY = 'stackly_cart';
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
+  }
+  function setCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCount();
+  }
+  function updateCartCount() {
+    const cart = getCart();
+    const total = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    document.querySelectorAll('.cart-count').forEach(el => {
+      el.textContent = total;
+    });
+  }
+  updateCartCount();
+
+  window.stacklyCart = {
+    add(item) {
+      const cart = getCart();
+      const existing = cart.find(i => i.id === item.id && i.size === (item.size || 'M'));
+      if (existing) {
+        existing.qty = (existing.qty || 1) + (item.qty || 1);
+      } else {
+        cart.push({ ...item, qty: item.qty || 1, size: item.size || 'M' });
+      }
+      setCart(cart);
+      window.showToast(`<b>Added</b> — ${item.name} is in your bag`);
+    }
+  };
+
+  // ---- ACCOUNT TOGGLE ----
+  document.querySelectorAll('[data-auth]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const mode = el.dataset.auth;
+      document.querySelectorAll('.account-toggle button').forEach(b => {
+        b.classList.toggle('active', b.dataset.auth === mode);
+      });
+      document.getElementById('loginCard').style.display = mode === 'login' ? 'block' : 'none';
+      document.getElementById('signupCard').style.display = mode === 'signup' ? 'block' : 'none';
+    });
+  });
+
+  // ---- ROLE TOGGLE ----
+  document.querySelectorAll('.role-toggle').forEach(group => {
+    group.querySelectorAll('.role-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.role-opt').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+
+  // ---- LOGIN FORM ----
+  document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const role = document.querySelector('[data-role-group="login"] .role-opt.active').dataset.role;
+    window.showToast('Signed in — redirecting to your dashboard.');
+    setTimeout(() => {
+      window.location.href = role === 'admin' ? 'admin.html' : 'dashboard.html';
+    }, 600);
+  });
+
+  // ---- SIGNUP FORM ----
+  document.getElementById('signupForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const role = document.querySelector('[data-role-group="signup"] .role-opt.active').dataset.role;
+    window.showToast('Account created — welcome to Stackly.');
+    setTimeout(() => {
+      window.location.href = role === 'admin' ? 'admin.html' : 'dashboard.html';
+    }, 600);
+  });
+
+  // ---- FAQ ACCORDION ----
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', function() {
+      const item = this.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      const parent = item.parentElement;
+      if (parent) {
+        parent.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      }
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
