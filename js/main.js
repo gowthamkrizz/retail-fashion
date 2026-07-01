@@ -19,90 +19,71 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll(); window.addEventListener('scroll', onScroll);
   }
 
-  /* ===== HAMBURGER — WITH CLOSE ICON ===== */
-  const burger = document.querySelector('.hamburger');
-  const links = document.querySelector('.nav-links');
-  
-  function toggleMenu() {
-    if (!burger || !links) return;
-    burger.classList.toggle('open');
-    links.classList.toggle('open');
-    document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+  /* ===== HAMBURGER — WORKS ON ALL PAGES ===== */
+  function initHamburger() {
+    const burger = document.querySelector('.hamburger');
+    const links = document.querySelector('.nav-links');
     
-    // Update hamburger icon to show X when open
-    updateHamburgerIcon();
-  }
-
-  function closeMenu() {
-    if (!burger || !links) return;
-    burger.classList.remove('open');
-    links.classList.remove('open');
-    document.body.style.overflow = '';
-    updateHamburgerIcon();
-  }
-
-  function updateHamburgerIcon() {
-    if (!burger) return;
-    const isOpen = burger.classList.contains('open');
-    const spans = burger.querySelectorAll('span');
-    
-    if (spans.length >= 3) {
-      // First span becomes top of X
-      spans[0].style.transform = isOpen ? 'rotate(45deg) translate(5px, 5px)' : '';
-      spans[0].style.width = isOpen ? '24px' : '';
-      
-      // Middle span disappears
-      spans[1].style.opacity = isOpen ? '0' : '';
-      spans[1].style.transform = isOpen ? 'scale(0)' : '';
-      
-      // Third span becomes bottom of X
-      spans[2].style.transform = isOpen ? 'rotate(-45deg) translate(5px, -5px)' : '';
-      spans[2].style.width = isOpen ? '24px' : '';
+    if (!burger || !links) {
+      // If hamburger doesn't exist on this page, skip
+      return;
     }
-  }
 
-  if (burger && links) {
-    // Remove any existing event listeners by cloning and replacing
+    // Remove any existing click listeners by cloning
     const newBurger = burger.cloneNode(true);
     burger.parentNode.replaceChild(newBurger, burger);
     
-    // Re-query the burger element
-    const updatedBurger = document.querySelector('.hamburger');
-    const updatedLinks = document.querySelector('.nav-links');
+    // Get fresh references
+    const freshBurger = document.querySelector('.hamburger');
+    const freshLinks = document.querySelector('.nav-links');
     
-    if (updatedBurger && updatedLinks) {
-      updatedBurger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleMenu();
-      });
+    if (!freshBurger || !freshLinks) return;
 
-      // Close menu when clicking a link
-      updatedLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeMenu);
-      });
+    function toggleMenu(e) {
+      if (e) e.stopPropagation();
+      freshBurger.classList.toggle('open');
+      freshLinks.classList.toggle('open');
+      document.body.style.overflow = freshLinks.classList.contains('open') ? 'hidden' : '';
+    }
 
-      // Close menu when clicking outside
-      document.addEventListener('click', function(e) {
-        if (updatedLinks.classList.contains('open')) {
-          const isClickInside = updatedLinks.contains(e.target) || updatedBurger.contains(e.target);
-          if (!isClickInside) {
-            closeMenu();
-          }
-        }
-      });
+    function closeMenu() {
+      freshBurger.classList.remove('open');
+      freshLinks.classList.remove('open');
+      document.body.style.overflow = '';
+    }
 
-      // Close menu on escape key
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && updatedLinks.classList.contains('open')) {
+    // Click handler
+    freshBurger.addEventListener('click', toggleMenu);
+
+    // Close on link click
+    freshLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      if (freshLinks.classList.contains('open')) {
+        const isClickInside = freshLinks.contains(e.target) || freshBurger.contains(e.target);
+        if (!isClickInside) {
           closeMenu();
         }
-      });
+      }
+    });
 
-      // Update references
-      window.__burger = updatedBurger;
-      window.__links = updatedLinks;
-    }
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && freshLinks.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    // Store references
+    window.__burger = freshBurger;
+    window.__links = freshLinks;
   }
+
+  // Initialize hamburger on all pages
+  initHamburger();
 
   /* Magnetic buttons */
   document.querySelectorAll('.magnetic').forEach(el => {
