@@ -19,20 +19,89 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll(); window.addEventListener('scroll', onScroll);
   }
 
-  /* Hamburger */
+  /* ===== HAMBURGER — WITH CLOSE ICON ===== */
   const burger = document.querySelector('.hamburger');
   const links = document.querySelector('.nav-links');
-  if(burger && links){
-    burger.addEventListener('click', () => {
-      burger.classList.toggle('open');
-      links.classList.toggle('open');
-      document.body.style.overflow = burger.classList.contains('open') ? 'hidden' : '';
-    });
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      burger.classList.remove('open');
-      links.classList.remove('open');
-      document.body.style.overflow = '';
-    }));
+  
+  function toggleMenu() {
+    if (!burger || !links) return;
+    burger.classList.toggle('open');
+    links.classList.toggle('open');
+    document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+    
+    // Update hamburger icon to show X when open
+    updateHamburgerIcon();
+  }
+
+  function closeMenu() {
+    if (!burger || !links) return;
+    burger.classList.remove('open');
+    links.classList.remove('open');
+    document.body.style.overflow = '';
+    updateHamburgerIcon();
+  }
+
+  function updateHamburgerIcon() {
+    if (!burger) return;
+    const isOpen = burger.classList.contains('open');
+    const spans = burger.querySelectorAll('span');
+    
+    if (spans.length >= 3) {
+      // First span becomes top of X
+      spans[0].style.transform = isOpen ? 'rotate(45deg) translate(5px, 5px)' : '';
+      spans[0].style.width = isOpen ? '24px' : '';
+      
+      // Middle span disappears
+      spans[1].style.opacity = isOpen ? '0' : '';
+      spans[1].style.transform = isOpen ? 'scale(0)' : '';
+      
+      // Third span becomes bottom of X
+      spans[2].style.transform = isOpen ? 'rotate(-45deg) translate(5px, -5px)' : '';
+      spans[2].style.width = isOpen ? '24px' : '';
+    }
+  }
+
+  if (burger && links) {
+    // Remove any existing event listeners by cloning and replacing
+    const newBurger = burger.cloneNode(true);
+    burger.parentNode.replaceChild(newBurger, burger);
+    
+    // Re-query the burger element
+    const updatedBurger = document.querySelector('.hamburger');
+    const updatedLinks = document.querySelector('.nav-links');
+    
+    if (updatedBurger && updatedLinks) {
+      updatedBurger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+      });
+
+      // Close menu when clicking a link
+      updatedLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (updatedLinks.classList.contains('open')) {
+          const isClickInside = updatedLinks.contains(e.target) || updatedBurger.contains(e.target);
+          if (!isClickInside) {
+            closeMenu();
+          }
+        }
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && updatedLinks.classList.contains('open')) {
+          closeMenu();
+        }
+      });
+
+      // Update references
+      window.__burger = updatedBurger;
+      window.__links = updatedLinks;
+    }
   }
 
   /* Magnetic buttons */
@@ -62,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.stacklyCart = {
     add(item){
       const cart = getCart();
-      const existing = cart.find(i => i.id === item.id && i.size === item.size);
-      if(existing){ existing.qty += item.qty || 1; } else { cart.push({...item, qty: item.qty || 1}); }
+      const existing = cart.find(i => i.id === item.id && i.size === (item.size || 'M'));
+      if(existing){ existing.qty += item.qty || 1; } else { cart.push({...item, qty: item.qty || 1, size: item.size || 'M'}); }
       setCart(cart);
       showToast(`<b>Added</b> — ${item.name} is in your bag`);
     },
@@ -245,8 +314,11 @@ document.addEventListener('DOMContentLoaded', () => {
     q.addEventListener('click', () => {
       const item = q.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-      item.parentElement.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if(!wasOpen) item.classList.add('open');
+      const parent = item.parentElement;
+      if (parent) {
+        parent.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      }
+      if (!wasOpen) item.classList.add('open');
     });
   });
 
@@ -254,3 +326,173 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.year').forEach(el => el.textContent = new Date().getFullYear());
 
 });
+
+// ============================================================
+// MOBILE OVERFLOW FIXES — applied after page load
+// ============================================================
+(function fixMobileOverflow() {
+  'use strict';
+
+  function applyFixes() {
+    const isMobile = window.innerWidth <= 768;
+    
+    // Fix shop page hero padding on mobile
+    document.querySelectorAll('.page-header').forEach(el => {
+      if (isMobile) {
+        el.style.paddingLeft = '16px';
+        el.style.paddingRight = '16px';
+      } else {
+        el.style.paddingLeft = '';
+        el.style.paddingRight = '';
+      }
+    });
+
+    // About page hero
+    document.querySelectorAll('.about-hero').forEach(el => {
+      if (isMobile) {
+        el.style.paddingLeft = '16px';
+        el.style.paddingRight = '16px';
+      } else {
+        el.style.paddingLeft = '';
+        el.style.paddingRight = '';
+      }
+    });
+
+    // Contact page hero
+    document.querySelectorAll('.contact-hero').forEach(el => {
+      if (isMobile) {
+        el.style.paddingLeft = '16px';
+        el.style.paddingRight = '16px';
+      } else {
+        el.style.paddingLeft = '';
+        el.style.paddingRight = '';
+      }
+    });
+
+    // Navbar inner padding
+    document.querySelectorAll('.nav-inner').forEach(el => {
+      if (isMobile) {
+        el.style.paddingLeft = '0';
+      } else {
+        el.style.paddingLeft = '';
+      }
+    });
+
+    // Footer grid padding
+    document.querySelectorAll('.footer-grid').forEach(el => {
+      if (isMobile) {
+        el.style.paddingLeft = '16px';
+        el.style.paddingRight = '16px';
+      } else {
+        el.style.paddingLeft = '';
+        el.style.paddingRight = '';
+      }
+    });
+
+    // Footer bottom padding
+    document.querySelectorAll('.footer-bottom').forEach(el => {
+      if (isMobile) {
+        el.style.paddingLeft = '16px';
+        el.style.paddingRight = '16px';
+      } else {
+        el.style.paddingLeft = '';
+        el.style.paddingRight = '';
+      }
+    });
+
+    // Hero float text (about page)
+    document.querySelectorAll('.about-hero .hero-float-text').forEach(el => {
+      el.style.display = isMobile ? 'none' : '';
+    });
+
+    // Hero floating icons (about page)
+    document.querySelectorAll('.about-hero .hero-floating-icons').forEach(el => {
+      el.style.display = isMobile ? 'none' : '';
+    });
+
+    // Shop hero float
+    document.querySelectorAll('.page-header .hero-float').forEach(el => {
+      el.style.display = isMobile ? 'none' : '';
+    });
+
+    // Contact hero floating shapes
+    document.querySelectorAll('.contact-hero .floating-shape').forEach(el => {
+      el.style.display = isMobile ? 'none' : '';
+    });
+
+    // Side mark - hide on mobile
+    document.querySelectorAll('.side-mark').forEach(el => {
+      el.style.display = isMobile ? 'none' : '';
+    });
+
+    // Fix wrap padding on mobile
+    document.querySelectorAll('.wrap').forEach(el => {
+      if (!el.closest('.shop-layout') && !el.closest('.footer-grid')) {
+        el.style.paddingLeft = isMobile ? '16px' : '';
+        el.style.paddingRight = isMobile ? '16px' : '';
+      }
+    });
+
+    // Hero meta grid (about page)
+    document.querySelectorAll('.about-hero .hero-meta-grid').forEach(el => {
+      if (isMobile) {
+        el.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        el.style.gap = '10px';
+      } else {
+        el.style.gridTemplateColumns = '';
+        el.style.gap = '';
+      }
+    });
+
+    // Hero tag pills (about page)
+    document.querySelectorAll('.about-hero .hero-tag-pills').forEach(el => {
+      el.style.gap = isMobile ? '6px' : '';
+    });
+
+    // Shop layout
+    document.querySelectorAll('.shop-layout').forEach(el => {
+      if (isMobile) {
+        el.style.paddingLeft = '16px';
+        el.style.paddingRight = '16px';
+      } else {
+        el.style.paddingLeft = '';
+        el.style.paddingRight = '';
+      }
+    });
+
+    // Hero stats mini
+    document.querySelectorAll('.page-header .hero-stats-mini').forEach(el => {
+      if (isMobile) {
+        el.style.gap = '12px';
+      } else {
+        el.style.gap = '';
+      }
+    });
+
+    // Hero tagline
+    document.querySelectorAll('.page-header .hero-tagline').forEach(el => {
+      if (isMobile) {
+        el.style.gap = '8px';
+      } else {
+        el.style.gap = '';
+      }
+    });
+  }
+
+  // Run on load
+  if (document.readyState === 'complete') {
+    setTimeout(applyFixes, 100);
+  } else {
+    window.addEventListener('load', function() {
+      setTimeout(applyFixes, 100);
+    });
+  }
+
+  // Run on resize
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(applyFixes, 150);
+  });
+
+})();

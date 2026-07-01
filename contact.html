@@ -38,6 +38,23 @@
   --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* --- FIX: prevent mobile overflow --- */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 768px) {
+  .wrap { padding: 0 16px; }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -76,12 +93,6 @@ textarea,
 select {
   font-family: inherit;
   font-size: 1rem;
-}
-
-.wrap {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 32px;
 }
 
 h1, h2, h3, h4 {
@@ -177,7 +188,7 @@ h1, h2, h3, h4 {
 }
 @media (max-width: 860px) {
   .side-mark {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -205,6 +216,9 @@ h1, h2, h3, h4 {
   justify-content: space-between;
   gap: 24px;
   padding-left: 54px;
+}
+@media (max-width: 980px) {
+  .nav-inner { padding-left: 0 !important; }
 }
 .logo {
   font-family: var(--ff-display);
@@ -420,6 +434,16 @@ h1, h2, h3, h4 {
   padding-bottom: 60px;
   overflow: hidden;
   background: linear-gradient(175deg, var(--ivory) 0%, var(--ivory-deep) 100%);
+  padding-left: 54px;
+  padding-right: 54px;
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 768px) {
+  .contact-hero {
+    padding: 130px 16px 40px !important;
+    min-height: auto;
+  }
 }
 .contact-hero::before {
   content: '';
@@ -438,6 +462,11 @@ h1, h2, h3, h4 {
   opacity: 0.05;
   background: var(--wine);
   animation: floatShape 8s ease-in-out infinite;
+}
+@media (max-width: 768px) {
+  .contact-hero .floating-shape {
+    display: none;
+  }
 }
 .contact-hero .floating-shape:nth-child(1) {
   width: 300px;
@@ -468,6 +497,7 @@ h1, h2, h3, h4 {
   position: relative;
   z-index: 2;
   max-width: 700px;
+  width: 100%;
 }
 .contact-hero-content .breadcrumb {
   display: flex;
@@ -548,6 +578,15 @@ h1, h2, h3, h4 {
   letter-spacing: .08em;
   color: var(--ink-soft);
 }
+@media (max-width: 768px) {
+  .contact-hero-content .hero-stats {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .contact-hero-content .hero-stats div b {
+    font-size: 1.4rem;
+  }
+}
 .scroll-indicator-contact {
   position: absolute;
   bottom: 30px;
@@ -594,15 +633,6 @@ h1, h2, h3, h4 {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   background-size: 256px 256px;
 }
-@media (max-width: 768px) {
-  .contact-hero-content .hero-stats {
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .contact-hero-content .hero-stats div b {
-    font-size: 1.4rem;
-  }
-}
 
 /* ---- 2. CONTACT METHODS ---- */
 .contact-methods {
@@ -613,6 +643,16 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+}
+@media (max-width: 980px) {
+  .contact-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .contact-methods-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .contact-method-card {
   padding: 32px 24px;
@@ -674,16 +714,6 @@ h1, h2, h3, h4 {
 .contact-method-card:hover .glow {
   opacity: 1;
 }
-@media (max-width: 980px) {
-  .contact-methods-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 480px) {
-  .contact-methods-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ---- 3. CLIENT ADVISORS ---- */
 .advisors-section {
@@ -694,6 +724,16 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+}
+@media (max-width: 980px) {
+  .advisors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .advisors-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .advisor-card {
   background: #fff;
@@ -784,16 +824,6 @@ h1, h2, h3, h4 {
   font-size: .7rem;
   border-radius: 40px;
 }
-@media (max-width: 980px) {
-  .advisors-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 640px) {
-  .advisors-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ---- 4. STUDIO VISIT ---- */
 .studio-visit {
@@ -805,6 +835,11 @@ h1, h2, h3, h4 {
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   align-items: center;
+}
+@media (max-width: 768px) {
+  .studio-visit-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .studio-visit-grid .studio-image {
   position: relative;
@@ -832,6 +867,14 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
   font-size: .82rem;
+}
+@media (max-width: 768px) {
+  .studio-visit-grid .studio-image .floating-card {
+    bottom: 12px;
+    right: 12px;
+    padding: 12px 16px;
+    font-size: .7rem;
+  }
 }
 .studio-visit-grid .studio-image .floating-card b {
   display: block;
@@ -872,17 +915,6 @@ h1, h2, h3, h4 {
   font-family: var(--ff-mono);
   font-size: .7rem;
   color: var(--ink-soft);
-}
-@media (max-width: 768px) {
-  .studio-visit-grid {
-    grid-template-columns: 1fr;
-  }
-  .studio-visit-grid .studio-image .floating-card {
-    bottom: 12px;
-    right: 12px;
-    padding: 12px 16px;
-    font-size: .7rem;
-  }
 }
 
 /* ---- 5. WORLD MAP ---- */
@@ -988,6 +1020,17 @@ h1, h2, h3, h4 {
   position: relative;
   padding-top: 40px;
 }
+@media (max-width: 860px) {
+  .journey-timeline {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+@media (max-width: 480px) {
+  .journey-timeline {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 .journey-timeline::before {
   content: '';
   position: absolute;
@@ -996,6 +1039,11 @@ h1, h2, h3, h4 {
   right: 10%;
   height: 2px;
   background: var(--line);
+}
+@media (max-width: 860px) {
+  .journey-timeline::before {
+    display: none;
+  }
 }
 .journey-timeline::after {
   content: '';
@@ -1006,6 +1054,11 @@ h1, h2, h3, h4 {
   background: var(--wine);
   width: 0%;
   animation: drawLine 1.5s var(--transition-smooth) forwards;
+}
+@media (max-width: 860px) {
+  .journey-timeline::after {
+    display: none;
+  }
 }
 @keyframes drawLine {
   0% { width: 0%; }
@@ -1053,23 +1106,6 @@ h1, h2, h3, h4 {
   font-size: .75rem;
   color: var(--ink-soft);
 }
-@media (max-width: 860px) {
-  .journey-timeline {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-  }
-  .journey-timeline::before {
-    display: none;
-  }
-  .journey-timeline::after {
-    display: none;
-  }
-}
-@media (max-width: 480px) {
-  .journey-timeline {
-    grid-template-columns: 1fr 1fr;
-  }
-}
 
 /* ---- 7. CONCIERGE SERVICES ---- */
 .concierge-section {
@@ -1080,6 +1116,16 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+}
+@media (max-width: 980px) {
+  .concierge-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .concierge-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .concierge-card {
   padding: 28px 20px;
@@ -1109,16 +1155,6 @@ h1, h2, h3, h4 {
   color: var(--ink-soft);
   margin-top: 4px;
 }
-@media (max-width: 980px) {
-  .concierge-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 480px) {
-  .concierge-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ---- 8. CUSTOMER REVIEWS ---- */
 .reviews-section {
@@ -1129,6 +1165,11 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+}
+@media (max-width: 768px) {
+  .reviews-carousel {
+    grid-template-columns: 1fr;
+  }
 }
 .review-card {
   padding: 28px;
@@ -1176,11 +1217,6 @@ h1, h2, h3, h4 {
   font-size: .75rem;
   color: var(--ink-soft);
 }
-@media (max-width: 768px) {
-  .reviews-carousel {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ---- 9. SOCIAL COMMUNITY ---- */
 .social-section {
@@ -1191,6 +1227,16 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+@media (max-width: 768px) {
+  .social-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .social-card {
   padding: 24px;
@@ -1237,16 +1283,6 @@ h1, h2, h3, h4 {
   padding: 8px 24px;
   font-size: .7rem;
   border-radius: 40px;
-}
-@media (max-width: 768px) {
-  .social-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (max-width: 480px) {
-  .social-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ---- 10. FAQ PREMIUM ---- */
@@ -1329,6 +1365,18 @@ h1, h2, h3, h4 {
   0% { opacity: 0; transform: translateY(40px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+@media (max-width: 640px) {
+  .live-support-bar {
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    border-radius: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 14px 20px;
+    gap: 12px;
+  }
+}
 .live-support-bar .live-dot {
   width: 8px;
   height: 8px;
@@ -1351,18 +1399,6 @@ h1, h2, h3, h4 {
   padding: 8px 20px;
   font-size: .7rem;
   border-radius: 40px;
-}
-@media (max-width: 640px) {
-  .live-support-bar {
-    bottom: 20px;
-    right: 20px;
-    left: 20px;
-    border-radius: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 14px 20px;
-    gap: 12px;
-  }
 }
 
 /* ---- 12. CTA ---- */
@@ -1484,6 +1520,18 @@ footer {
   padding-left: 54px;
   padding-right: 32px;
 }
+@media (max-width: 860px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .footer-brand .logo { color: #000; display: inline-block;
   margin-bottom: 14px;
 }
@@ -1548,17 +1596,9 @@ footer {
   gap: 12px;
 }
 @media (max-width: 860px) {
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    padding-left: 32px;
-  }
   .footer-bottom {
-    padding-left: 32px;
-  }
-}
-@media (max-width: 480px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 }
 
@@ -1641,7 +1681,6 @@ footer {
       <a href="account.html">Account</a>
     </nav>
     <div class="nav-actions">
-     
       <a href="cart.html" class="icon-btn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><span class="cart-count">0</span></a>
       <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -1655,22 +1694,21 @@ footer {
     <div class="floating-shape"></div>
     <div class="floating-shape"></div>
     <div class="floating-shape"></div>
-    <div class="wrap">
+    <div class="wrap" style="padding-left: 0; padding-right: 0; width: 100%; max-width: 100%;">
       <div class="contact-hero-content">
         <div class="breadcrumb">
-          <a href="index.html">Home</a>
-          <span>/</span>
-          <span class="current">Contact</span>
+          <a href="index.html">Home</a> <span>/</span> <span class="current">Contact</span>
         </div>
         <h1>
-          <span class="line"><span>Let's start</span></span>
-          <span class="line"><span>a conversation.</span></span>
+          <span class="line"><span>Let's</span></span>
+          <span class="line"><span>connect.</span></span>
+          <span class="line"><span>Elevate your style.</span></span>
         </h1>
-        <p>We're here to help — whether you have a question, need styling advice, or want to explore our latest collection.</p>
+        <p>Reach out for styling consultations, brand collaborations, or any question — we're here to help you build a wardrobe that tells your story.</p>
         <div class="hero-stats">
           <div><b>24hr</b><span>Response Time</span></div>
           <div><b>4.9★</b><span>Support Rating</span></div>
-          <div><b>100%</b><span>Satisfaction</span></div>
+          <div><b>15</b><span>Countries Served</span></div>
         </div>
       </div>
     </div>
